@@ -1,4 +1,6 @@
-A javascript library implementing useful multivariate function optimization procedures, which allow to find a local minimum of some function of a vector argument. Such argument is a javascript array. For example usage, see index.html.
+A javascript library implementing useful multivariate function optimization procedures, which allow to find a local minimum of some function of a vector argument. Such argument is a javascript array. 
+
+For example usage, see index.html.
 
 Currently, implemented are:
 
