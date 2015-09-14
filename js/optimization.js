@@ -38,7 +38,7 @@ var optimjs = (function (exports) {
 
         var pfx = Math.exp(10);
         var fx = fnc(x);
-        var pidx = 10;
+        var pidx = 1;
         while (!convergence) {
 
             var indicies = optimjs.shuffleIndiciesOf(x);
@@ -73,7 +73,7 @@ var optimjs = (function (exports) {
 
             pidx--;
             if (pidx === 0) {
-                pidx = 10;
+                pidx = 1;
                 console.log(fx);
             }
 
