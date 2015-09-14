@@ -16,11 +16,83 @@
         <script type="text/javascript">
 
             function start() {
+
+                var evaluations = 0;
+                //example function
                 
-				
-				
+                // L2 regression problem with 100 variables
+                // and 1000 points to fit to
+                var problem_size = 100;
+                var M = randomMatrix(1000, problem_size);
+                var Y = randomVector(1000);
+                var x0 = randomVector(problem_size);
+
+                fnc = function (x) {
+                    
+                    evaluations++;
+                    return L2RegressionObj(M, x, Y);
+                    
+                };
+
+
+                text_output("Initialization objective value: " + fnc(x0));
+                
+                // see console output for the optimization progress
+                var solution = optimjs.minimize(fnc, x0);
+
+                text_output("Found objective value: " + solution.fncvalue);
+                text_output("Function evaluations: " + evaluations);
+
             }
-			
+
+
+            function text_output(str) {
+
+                console.log(str);
+                document.write(str + "<br>");
+
+            }
+
+            function L2RegressionObj(M, v, Y) {
+                var obj = 0;
+                for (var i = 0; i < M.length; i++) {
+
+                    var product = 0;
+
+                    for (var j = 0; j < v.length; j++) {
+                        product += M[i][j] * v[j];
+                    }
+                    
+                    obj += (product - Y[i])*(product - Y[i]);
+
+                }
+                return obj;
+
+            }
+
+            function randomVector(N) {
+
+                var init = [];
+
+                for (var i = 0; i < N; i++) {
+                    init.push(Math.random());
+                }
+
+                return init;
+            }
+
+            function randomMatrix(N, M) {
+
+                var init = [];
+
+                for (var i = 0; i < N; i++) {
+                    init.push(randomVector(M));
+                }
+
+                return init;
+
+            }
+
         </script>
     </head>
 
