@@ -18,7 +18,7 @@ var optimjs = (function (exports) {
             idx[j] = tmp;
         }
         return idx;
-    }
+    };
 
     exports.minimize_Powell = function (fnc, x0) {
         // fnc: function which takes array of size N as an input
@@ -224,6 +224,58 @@ var optimjs = (function (exports) {
 
     };
 
+    exports.minimize_SGD = function (I, fnc, grd, W0){
+        
+        var splitp = Math.floor(I.length*0.7);
+        
+        var Iv = I.slice(splitp+1);
+        var I = I.slice(0, splitp);
+        
+        var W = W0.slice();
+        var alpha = 0.00001;
+        var checks = 5;
+        var fmin = Math.exp(30);
+        var Wbest = W.slice();
+        var idx = 0;
+        
+        while(checks > 0){
+            idx ++;
+            for (var i = 0; i < I.length; i++) {
+                var gr = grd(W,I[i]);
+                optimjs.vect_x_pluseq_ag(W, -alpha, gr);
+            }
+            
+            var floc = 0;
+            
+            for (var i = 0; i < Iv.length; i++) {
+                var fv = fnc(W,Iv[i]);
+                floc += fv;
+            }
+            
+            if (floc < fmin) {
+                fmin = floc;
+                Wbest = W.slice();
+                alpha *= 1.1;
+                checks = 10;
+            }
+            else
+            {
+                checks -= 1;
+                alpha *= 0.5;
+            }
+            
+            console.log("epoch with fv = " + fmin + " alpha= " + alpha);
+            if (idx > 70) {
+                break;
+            }
+        }
+        
+        var solution = {};
+        solution.argument = Wbest.slice();
+        solution.fncvalue = fmin;
+        return solution;
+        
+    };
 
     exports.numerical_gradient = function (fnc, x) {
 
@@ -255,6 +307,14 @@ var optimjs = (function (exports) {
 
     };
 
+    exports.vect_x_times_c = function (x, c) {
+        var r = x.slice();
+        for (var i = 0; i < x.length; i++) {
+            r[i]  = r[i] * c;
+        }
+        return r;
+
+    };
 
     exports.vect_a_minus_b = function (a, b) {
 
