@@ -8,4 +8,4 @@ Currently, implemented are:
 
 **Gradient descent.** Requires user to provide the gradient of the function in order to converge to the local minimum.
 
-**Limited memory Broyden–Fletcher–Goldfarb–Shanno method (L-BFGS). ** Very popular and powerful descent algorithm. Uses approximation to the Hessian based on recorded values of the gradient over the last m iterations. Involves numerical division, and because of this currently unstable (maybe a bug) so use at your own risk.
+**Limited memory Broyden–Fletcher–Goldfarb–Shanno method (L-BFGS).** Very popular and powerful descent algorithm. Uses approximation to the Hessian based on recorded values of the gradient over the last m iterations. Involves numerical division, and because of this currently unstable (maybe a bug) so use at your own risk.
