@@ -20,7 +20,7 @@ var optimjs = (function (exports) {
         return idx;
     }
 
-    exports.minimize = function (fnc, x0) {
+    exports.minimize_Powell = function (fnc, x0) {
         // fnc: function which takes array of size N as an input
         // x0: array or real numbers of size N; 
         // serves as initialization of algorithm.
@@ -58,17 +58,11 @@ var optimjs = (function (exports) {
 
                 x[indicies[i]] = x[indicies[i]] - alpha * dx;
                 fx = fnc(x);
-                
+
             }
 
             // this automatically selects step size 
-            if (pfx > fx) {
-                    alpha = alpha * 1.1;
-                }
-                else
-                {
-                    alpha = alpha * 0.7;
-                }
+            alpha = pfx > fx ? alpha * 1.1 : alpha * 0.7;
             pfx = fx;
 
             pidx--;
@@ -84,6 +78,214 @@ var optimjs = (function (exports) {
         solution.fncvalue = fx;
 
         return solution;
+
+    };
+
+    exports.minimize_GradientDescent = function (fnc, grd, x0) {
+        // fnc: function which takes array of size N as an input
+        // grd: gradient (array of size N) of function for some input
+        // x0: array or real numbers of size N; 
+        // serves as initialization of algorithm.
+
+        // solution is a struct, with fields:
+        // argument: solution argument
+        // fncvalue: function value at found optimum
+        var x = x0.slice();
+
+        var convergence = false;
+        var eps = 1e-3;
+        var alpha = 0.01;
+
+        var pfx = fnc(x);
+
+        while (!convergence) {
+            var g = grd(x);
+            convergence = optimjs.vect_max_abs_x_less_eps(g, eps);
+
+            if (convergence) {
+                break;
+            }
+
+            var repeat = true;
+
+            while (repeat) {
+                var xn = x.slice();
+                optimjs.vect_x_pluseq_ag(xn, -alpha, g); // perform step
+                var fx = fnc(xn);
+
+                repeat = pfx < fx;
+                // this automatically selects step size 
+                alpha = repeat ? alpha * 0.7 : alpha * 1.1;
+            }
+
+            x = xn;
+            pfx = fx;
+
+        }
+
+        var solution = {};
+        solution.argument = x;
+        solution.fncvalue = fx;
+        return solution;
+
+    };
+
+    exports.minimize_L_BFGS = function (fnc, grd, x0) {
+        // fnc: function which takes array of size N as an input
+        // grd: gradient (array of size N) of function for some input
+        // x0: array or real numbers of size N; 
+        // serves as initialization of algorithm.
+
+        // solution is a struct, with fields:
+        // argument: solution argument
+        // fncvalue: function value at found optimum
+        var x = x0.slice();
+
+        var eps = 1e-3; // max abs value of gradient component for termination
+        var alpha = 0.001; // initial step size
+        var m = 5; // history size to keep for Hessian approximation
+
+        var pfx = fnc(x);
+        var s = [];
+        var y = [];
+        var ro = [];
+
+        var g = grd(x);
+        var direction = g.slice();
+        var convergence = false;
+        while (!convergence) {
+
+
+            var repeat = true;
+
+            var xn = x.slice();
+            optimjs.vect_x_pluseq_ag(xn, alpha, direction); // perform step
+            var fx = fnc(xn);
+            alpha = pfx < fx ? alpha * 0.5 : alpha * 1.2;
+
+            // apply limited memory BFGS procedure
+            var gn = grd(xn);
+
+            if (optimjs.vect_max_abs_x_less_eps(gn, eps)) {
+                break;
+            }
+
+            var dx = optimjs.vect_a_minus_b(xn, x);
+            var dg = optimjs.vect_a_minus_b(gn, g);
+
+            s.unshift(dx);
+            y.unshift(dg);
+            var tmp = 1 / (optimjs.dot(dx, dg));
+            ro.unshift(tmp);
+
+            if (s.length > m) {
+                s.pop();
+                y.pop();
+                ro.pop();
+            }
+
+            var r = g.slice();
+            var a = new Array(s.length);
+
+            for (var i = 0; i < s.length; i++) {
+                var pi = 1 / (optimjs.dot(s[i], y[i]));
+                a[i] = pi * optimjs.dot(s[i], r);
+                optimjs.vect_x_pluseq_ag(r, -a[i], y[i]);
+            }
+
+            // perform Hessian scaling
+            var scale = optimjs.dot(dx, dg) / optimjs.dot(dg, dg);
+            for (var i = 0; i < r.length; i++) {
+                r[i] = r[i] * scale;
+            }
+
+            for (var i = 0; i < s.length; i++) {
+                var j = s.length - i - 1;
+                var pj = 1 / (optimjs.dot(s[j], y[j]));
+                var beta = pj * optimjs.dot(y[j], r);
+                optimjs.vect_x_pluseq_ag(r, (a[j] - beta), s[j]);
+            }
+            direction = r.slice();
+
+            for (var i = 0; i < direction.length; i++) {
+                direction[i] = -direction[i];
+            }
+
+            pfx = fx;
+            x = xn;
+            g = gn;
+
+        }
+
+        var solution = {};
+        solution.argument = x;
+        solution.fncvalue = fx;
+        return solution;
+
+    };
+
+
+    exports.numerical_gradient = function (fnc, x) {
+
+        var grad = x.slice();
+        var fx = fnc(x);
+        var h = 1e-6; // step size
+
+        for (var i = 0; i < x.length; i++) {
+
+            // approximation using simple forward difference
+            x[i] += h;
+            var fxi = fnc(x);
+            x[i] -= h;
+
+            grad[i] = (fxi - fx) / h;
+        }
+        return grad;
+    };
+
+    // some vector operations used in all of the optimization procedures above
+
+    exports.dot = function (a, b) {
+
+        var result = 0;
+        for (var i = 0; i < a.length; i++) {
+            result += a[i] * b[i];
+        }
+        return result;
+
+    };
+
+
+    exports.vect_a_minus_b = function (a, b) {
+
+        var result = new Array(a.length);
+        for (var i = 0; i < a.length; i++) {
+            result[i] = a[i] - b[i];
+        }
+        return result;
+
+    };
+
+    exports.vect_x_pluseq_ag = function (x, a, g) {
+        // used for fixed step size updating value of x
+        for (var i = 0; i < x.length; i++) {
+            x[i] = x[i] + a * g[i];
+        }
+
+        return x;
+
+    };
+
+    exports.vect_max_abs_x_less_eps = function (x, eps) {
+
+        // used for fixed step size updating value of x
+        for (var i = 0; i < x.length; i++) {
+            if (Math.abs(x[i]) >= eps) {
+                return false;
+            }
+        }
+
+        return true;
 
     };
 

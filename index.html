@@ -19,29 +19,53 @@
 
                 var evaluations = 0;
                 //example function
-                
+
                 // L2 regression problem with 100 variables
                 // and 1000 points to fit to
-                var problem_size = 500;
+                var problem_size = 10;
                 var M = randomMatrix(1000, problem_size);
                 var Y = randomVector(1000);
                 var x0 = randomVector(problem_size);
 
                 fnc = function (x) {
-                    
                     evaluations++;
                     return L2RegressionObj(M, x, Y);
-                    
                 };
 
+                // dummy for gradient
+                grd = function (x) {
+                    fnc = function (x) {
+                        return L2RegressionObj(M, x, Y);
+                    };
+                    evaluations++;
+                    return optimjs.numerical_gradient(fnc, x);
+                };
 
                 text_output("Initialization objective value: " + fnc(x0));
-                
-                // see console output for the optimization progress
-                var solution = optimjs.minimize(fnc, x0);
 
+                // see console output for the optimization progress
+                var solution = optimjs.minimize_Powell(fnc, x0);
+
+                text_output("Solving with Powell mehtod: ");
                 text_output("Found objective value: " + solution.fncvalue);
                 text_output("Function evaluations: " + evaluations);
+
+                evaluations = 0;
+                // see console output for the optimization progress
+                var solution = optimjs.minimize_GradientDescent(fnc, grd, x0);
+
+                text_output("Solving with GD: ");
+                text_output("Found objective value: " + solution.fncvalue);
+                text_output("Function / gradient evaluations: " + evaluations);/**/
+
+
+                evaluations = 0;
+                // see console output for the optimization progress
+                var solution = optimjs.minimize_L_BFGS(fnc, grd, x0);
+
+                text_output("Solving with L-BFGS: ");
+                text_output("Found objective value: " + solution.fncvalue);
+                text_output("Function / gradient evaluations: " + evaluations);
 
             }
 
@@ -62,8 +86,8 @@
                     for (var j = 0; j < v.length; j++) {
                         product += M[i][j] * v[j];
                     }
-                    
-                    obj += (product - Y[i])*(product - Y[i]);
+
+                    obj += (product - Y[i]) * (product - Y[i]);
 
                 }
                 return obj;
@@ -75,7 +99,7 @@
                 var init = [];
 
                 for (var i = 0; i < N; i++) {
-                    init.push(Math.random());
+                    init.push(Math.random());//Math.random()
                 }
 
                 return init;
