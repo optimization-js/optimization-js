@@ -100,6 +100,11 @@
                 text_output("Solving with SGD: ");
                 text_output("Found objective value: " + fnc(solution.argument));
                 text_output("Function / gradient evaluations: " + evaluations);
+                
+                
+                text_output(" ");
+                text_output("Warning: SGD yields sligtly worse objective due to ");
+                text_output("part of the data used for the cross validation. ");
 
             }
 
