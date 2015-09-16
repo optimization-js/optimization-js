@@ -1,4 +1,3 @@
-// optimjs stands for optimize javascript (duh :D)
 var optimjs = (function (exports) {
 
     // export public members
