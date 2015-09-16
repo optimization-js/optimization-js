@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>Black box demo</title>
+        <title>Example optimization.js usage</title>
 
         <!-- CSS goes here -->
         <style>
@@ -9,7 +9,7 @@
             }
         </style>
 
-        <!-- import convnetjs library -->
+        <!-- import optimization library -->
         <script src="js/optimization.js"></script>
 
         <!-- javascript goes here -->
@@ -23,10 +23,11 @@
                 // L2 regression problem with 100 variables
                 // and 1000 points to fit to
                 var problem_size = 10;
-                var X = randomMatrix(2000, problem_size);
-                var Y = randomVector(2000);
+                var X = randomMatrix(1000, problem_size);
+                var Y = randomVector(1000);
                 var x0 = randomVector(problem_size);
-
+                
+                // objective
                 fnc = function (v) {
                     evaluations++;
                     return L2RegressionObj(X, v, Y);
@@ -67,6 +68,7 @@
                 text_output("Found objective value: " + solution.fncvalue);
                 text_output("Function / gradient evaluations: " + evaluations);
                 evaluations = 0;
+                
                 // objective for single point in L2 regression
                 var fn = function (v, i) {
                     // v: parameter being optimized
@@ -100,8 +102,7 @@
                 text_output("Solving with SGD: ");
                 text_output("Found objective value: " + fnc(solution.argument));
                 text_output("Function / gradient evaluations: " + evaluations);
-                
-                
+
                 text_output(" ");
                 text_output("Warning: SGD yields sligtly worse objective due to ");
                 text_output("part of the data used for the cross validation. ");

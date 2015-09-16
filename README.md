@@ -8,7 +8,7 @@ Currently, implemented are:
 
 **Limited memory Broyden–Fletcher–Goldfarb–Shanno method (L-BFGS).** Very popular and powerful descent algorithm. Uses approximation to the Hessian based on recorded values of the gradient over the last m iterations. Involves numerical division, and because of this can be unstable, so use at your own risk.
 
-**Gradient descent.** Performs gradient descent using user provided function and it gradient. Can be used instead of L-BFGS in case the latter is unstable on your problem.
+**Gradient descent.** Performs gradient descent using user provided function and its gradient. Can be used instead of L-BFGS in case the latter is unstable on your problem.
 
 **Stochastic gradient descent.** Very efficient for data fitting problems, and thus widely used with huge datasets for L2 regression or neural network training. Requires that optimization objective can be written as f(w) = \sum_{i \in [n]} g(w).
 

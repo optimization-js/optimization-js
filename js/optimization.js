@@ -155,13 +155,10 @@ var optimjs = (function (exports) {
         var convergence = false;
         while (!convergence) {
 
-
-            var repeat = true;
-
             var xn = x.slice();
             optimjs.vect_x_pluseq_ag(xn, alpha, direction); // perform step
             var fx = fnc(xn);
-            alpha = pfx < fx ? alpha * 0.5 : alpha * 1.2;
+            alpha = pfx < fx ? alpha * 0.5 : alpha * 1.2; // magic!
 
             // apply limited memory BFGS procedure
             var gn = grd(xn);
@@ -208,12 +205,20 @@ var optimjs = (function (exports) {
             direction = r.slice();
 
             for (var i = 0; i < direction.length; i++) {
+                if (isNaN(direction[i])) {
+                    convergence = true; // something went wrong. Stop now
+                }
+            }
+
+            for (var i = 0; i < direction.length; i++) {
                 direction[i] = -direction[i];
             }
 
             pfx = fx;
             x = xn;
             g = gn;
+            
+            console.log("fv = " + fx);
 
         }
 
