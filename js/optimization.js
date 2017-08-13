@@ -56,7 +56,6 @@ var optimjs = (function (exports) {
             pidx--;
             if (pidx === 0) {
                 pidx = 1;
-                console.log(fx);
             }
 
         }
@@ -212,8 +211,6 @@ var optimjs = (function (exports) {
             pfx = fx;
             x = xn;
             g = gn;
-            
-            console.log("fv = " + fx);
 
         }
 
