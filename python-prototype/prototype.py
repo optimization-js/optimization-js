@@ -3,52 +3,67 @@ import numpy as np
 from skopt.space import Real, Integer, Categorical
 from scipy.optimize import OptimizeResult
 
-def gen_minimize_1(function, dimensions, stopping_condition, x0=None,
+
+class RandomOptimizer():
+    def __init__(self, dimensions, tolerance=1e-3):
+        self.dims = dimensions
+        self.tol = tolerance
+        self.result = OptimizeResult()
+        self.result.x = None
+        self.result.message = "No feasible solution found yet"
+        self.result.fun = np.inf
+
+    def next(self):
+        return [d.rvs()[0] for d in self.dims]
+
+    def tell(self, x, f_value, constraint_violation, f_grad, c_grad):
+        if constraint_violation is None:
+            constraint_violation = 0
+
+        if self.result.fun > f_value and constraint_violation < self.tol:
+            self.result.x = x
+            self.result.message = None
+            self.result.fun = f_value
+
+
+def base_minimize(solver, function, dimensions, stopping_condition, x0=None,
                    constraint=None, function_gradient=None,
                    constraint_gradient=None, tolerance=1e-3):
     """
-    A first iteration of intelligent general purpose optimization algorithm.
+    Base minimization for different optimization algos
     """
 
     start_time = time()
-
-    best_obj = np.inf
-    best_violation = np.inf
-    best_x = None
-    failure = True
-    message = "Failed to satisfy constraints"
-    idx  = 0
+    solver = solver(dimensions, tolerance)
 
     while time()-start_time<stopping_condition:
-        idx += 1
+        p = solver.next()
 
-        x = [d.rvs()[0] for d in dimensions]
-        obj = function(x)
-
+        violation = None
         if constraint is not None:
-            violation = constraint(x)
-        else:
-            violation = 0.0
+            violation = constraint(p)
 
-        if violation > tolerance:
-            continue
+        f_grad = None
+        if function_gradient is not None:
+            f_grad = function_gradient(p)
 
-        if obj < best_obj:
-            best_obj = obj
-            best_violation = violation
-            best_x = x
-            failure = False
-            message = ""
+        c_grad = None
+        if constraint_gradient is not None:
+            c_grad = constraint_gradient(p)
 
-    result = OptimizeResult()
-    result.x = best_x
-    result.message = message
-    result.fun = best_obj
+        f_value = function(p)
 
-    return result
+        solver.tell(p, f_value, violation, f_grad, c_grad)
+
+    return solver.result
 
 
+def random_minimize(*args, **kwargs):
+    """
+    No strategy like random strategy
+    """
 
+    return base_minimize(RandomOptimizer, *args, **kwargs)
 
 
 

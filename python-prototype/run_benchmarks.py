@@ -1,7 +1,8 @@
 import numpy as np
 from bbob.evaluation import parallel_evaluate, calculate_metrics
 from bbob.tracks import ampgo
-from prototype import gen_minimize_1
+from prototype import random_minimize
+
 
 def evaluate_opt_alg(solver, problem, seed=0, stopping_criterion=10):
     np.random.seed(seed)
@@ -17,7 +18,7 @@ def evaluate_opt_alg(solver, problem, seed=0, stopping_criterion=10):
     return res
 
 r = parallel_evaluate(
-    solvers=gen_minimize_1,
+    solvers=random_minimize,
     task_subset=ampgo,
     n_reps=32,
     eval_kwargs={'stopping_criterion': 0.25},
