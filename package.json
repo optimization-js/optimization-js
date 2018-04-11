@@ -1,0 +1,32 @@
+{
+  "name": "optimization-js",
+  "version": "1.0.0",
+  "description": "Mathematical optimization in JavaScript.",
+  "main": "src/optimization.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/optimization-js/optimization-js.git"
+  },
+  "keywords": [
+    "optimization",
+    "gradient",
+    "descent",
+    "bayesian",
+    "hyperparameter",
+    "tuning",
+    "machine learning",
+    "artificial intelligence"
+  ],
+  "author": "optimization.js contributors (https://optimization-js.github.io/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/optimization-js/optimization-js/issues"
+  },
+  "homepage": "https://github.com/optimization-js/optimization-js#readme"
+}
