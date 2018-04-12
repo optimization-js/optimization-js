@@ -8,6 +8,8 @@
   },
   "scripts": {
     "test": "istanbul cover -x *.test.js _mocha -- -R spec tests/optimization.test.js",
+    "check-coverage": "istanbul check-coverage --statements 100 --functions 100 --lines 100",
+    "report-coverage": "cat ./coverage/lcov.info | codecov",
     "semantic-release": "semantic-release",
     "travis-deploy-once": "travis-deploy-once",
     "commit": "git-cz"
@@ -17,7 +19,7 @@
   },
   "config": {
     "ghooks": {
-      "pre-commit": "npm test"
+      "pre-commit": "npm test && npm run check-coverage"
     }
   },
   "repository": {
@@ -42,6 +44,7 @@
   "homepage": "https://github.com/optimization-js/optimization-js#readme",
   "devDependencies": {
     "chai": "4.1.2",
+    "codecov.io": "0.1.6",
     "commitizen": "^2.9.6",
     "cz-conventional-changelog": "^2.1.0",
     "ghooks": "2.0.2",

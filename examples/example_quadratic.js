@@ -52,7 +52,6 @@ function example_minimization_lbfgs(){
 
 // Below code is necessary for testing in node.js only. It has nothing to do with the examples above.
 exports = typeof module != 'undefined' && module.exports;  // add exports to module.exports if in node.js
-exports = exports || {};
 
 // record the 
 exports.example_minimization_powell = example_minimization_powell

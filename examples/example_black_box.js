@@ -59,7 +59,6 @@ function example_bb_random_optimization(){
 
 // Below code is necessary for testing in node.js only. It has nothing to do with the examples above.
 exports = typeof module != 'undefined' && module.exports;  // add exports to module.exports if in node.js
-exports = exports || {};
 
 // record the 
 exports.example_bb_random_optimization = example_bb_random_optimization

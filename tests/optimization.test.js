@@ -70,4 +70,33 @@ describe('Random optimizer', function(){
         expect(x[1]).to.be.greaterThan(-1.5).lessThan(-0.5)
         expect(y).to.be.greaterThan(-0.3).lessThan(0.3)
     })
+    it('allows to sample n points at a time', function(){
+        var optimizer = new optimjs.RandomOptimizer([
+            new optimjs.Real(-1.0, 1.0)
+        ])
+
+        var X = optimizer.ask(2)
+        expect(X.length).to.be.equal(2)
+    })
+})
+
+describe('Space', function(){
+    it('can be created from list of dims', function(){
+        var dims  = [
+            optimjs.Real(-1.0, 1.0),
+            optimjs.Real(-1.0, 1.0),
+        ]
+
+        // create from list of dims
+        var space = optimjs.to_space(dims)
+
+        // ensure that the space does not raise an exceptions
+        space = optimjs.to_space(space)
+
+        expect(function(){
+            optimjs.to_space('A')
+        }).to.throw(
+            'Unknown space definition'
+        )
+    })
 })

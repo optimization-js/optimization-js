@@ -68,46 +68,6 @@
                 text_output("Solving with L-BFGS: ");
                 text_output("Found objective value: " + solution.fncvalue);
                 text_output("Function / gradient evaluations: " + evaluations);
-                evaluations = 0;
-                
-                // objective for single point in L2 regression
-                var fn = function (v, i) {
-                    // v: parameter being optimized
-                    // i: index of the point
-                    var dif = optimjs.dot(X[i], v) - Y[i];
-                    evaluations++;
-                    return dif * dif * 0.5;
-                    
-                };
-
-                // gradient for single point in L2 regression
-                var gr = function (v, i) {
-                    // v: parameter being optimized
-                    // i: index of the point
-                    var dif = optimjs.dot(X[i], v) - Y[i];
-                    evaluations++;
-                    return optimjs.vect_x_times_c(X[i], dif);
-                    
-                };
-
-                var I = [];
-                for (var i = 0; i < X.length; i++) {
-                    I.push(i);
-                }
-
-                // see console output for the optimization progress
-                var solution = optimjs.minimize_SGD(I, fn, gr, x0);
-
-                evaluations = evaluations / X.length;
-
-                text_output("Solving with SGD: ");
-                text_output("Found objective value: " + fnc(solution.argument));
-                text_output("Function / gradient evaluations: " + evaluations);
-
-                text_output(" ");
-                text_output("Warning: SGD yields sligtly worse objective due to ");
-                text_output("part of the data used for the cross validation. ");
-
             }
 
 
