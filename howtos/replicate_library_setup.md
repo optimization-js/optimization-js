@@ -7,3 +7,6 @@ check out this excellent sequence of tutorials:
 
 The setup in the library, such as CI and unit testing, is largely based on this tutorial. If there will
 be any updates to this, it will be stated in this document.
+
+Note: for semantic-release-cli to work properly with your repo, you need to enable TravisCI for this repo first,
+if you are using TravisCI.
