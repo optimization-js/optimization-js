@@ -1,7 +1,112 @@
 var optimjs = (function (exports) {
-
     // export public members
     exports = exports || {};
+    exports.Real = function(low, high){
+        /*A dimension of real type.*/
+        this.low = low
+        this.high = high
+    
+        this.random_sample = function(){
+            /* Returns a uniformly sampled value from the space */
+            return Math.random()*(this.high - this.low) + this.low
+        }
+    }
+
+    exports.Space = function(dimensions){
+        /*Stores a set of dimensions and provides convenience funcs */
+        this.dims = dimensions;
+        this.random_samples = function(n){
+            /*Sample n points from space at random.*/
+            var X = []
+            for(var i = 0; i < n; i++){
+                var x = []
+                for(var dim of this.dims){
+                    x.push(dim.random_sample())
+                }
+                X.push(x)
+            }
+            return X
+        }
+    }
+    
+    exports.SpaceException = function(message){
+        this.message = message
+        this.toString = function(){
+            return this.message
+        }
+    }
+
+    exports.to_space = function(space_object){
+        /*Converts object to Space instance. Object can be at
+        least two options:
+        1. object is instance of Space, which is then returned
+        2. object is list of dimensions, which is then converted
+        to instance of Space and returned.*/
+    
+        // check if list of dimensions
+        if(space_object instanceof Array){
+            return new exports.Space(space_object)
+        }
+    
+        if(space_object instanceof exports.Space){
+            return space_object
+        }
+    
+        throw new exports.SpaceException('Unknown space definition')
+    }
+
+    exports.RandomOptimizer = function(space){
+        /*Performs optimization simply by randomly sampling
+        points from space.
+        Often very competitive in practice.*/
+        this.space = exports.to_space(space)
+        this.X = []
+        this.Y = []
+        this.best_x = null
+        this.best_y = null
+    
+        this.ask = function(n=null){
+            /* Returns the next n points to try */
+            // if n is not specified, return a single point verbatium
+            if(n == null){
+                return this.space.random_samples(1)[0]
+            }
+    
+            // return array of points
+            return this.space.random_samples(n)
+        }
+    
+        this.tell = function(X, Y){
+            /* Record new observed points. 
+            Do not really need to do it for random sampling.*/
+            
+            for(var i = 0; i < X.length; i++){
+                if(this.best_y == null || Y[i] < this.best_y){
+                    this.best_y = Y[i]
+                    this.best_x = X[i]
+                }
+            }
+    
+            // record observations
+            this.X = this.X.concat(X)
+            this.Y = this.Y.concat(Y)
+    
+            // create the optimization result object
+        }
+    
+    }
+    
+    exports.dummy_minimize = function (func, dims, n_calls=64){
+        var opt = new exports.RandomOptimizer(dims);
+    
+        for(var iter=0; iter < n_calls; iter++){
+            var x = opt.ask()
+            var y = func(x)
+            opt.tell([x], [y])
+        }
+    
+        return opt
+    }
 
     exports.minimize_Powell = function (fnc, x0) {
         // fnc: function which takes array of size N as an input

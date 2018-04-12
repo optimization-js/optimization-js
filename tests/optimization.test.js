@@ -45,3 +45,29 @@ describe('Examples', function(){
         test_quadratic_example(quad_examples.example_minimization_lbfgs)
     })
 })
+
+
+var bb_examples = require('../examples/example_black_box.js')
+
+describe('Random optimizer', function(){
+    it('example runs a-ok', function(){
+        // minimum of below: x = [1.0, -1.0]
+        var solution = bb_examples.example_bb_random_optimization();
+
+        // solution using *_minimize method 
+        var x = solution[0][0]
+        var y = solution[0][1]
+
+        expect(x[0]).to.be.greaterThan(0.5).lessThan(1.5)
+        expect(x[1]).to.be.greaterThan(-1.5).lessThan(-0.5)
+        expect(y).to.be.greaterThan(-0.3).lessThan(0.3)
+
+        // solution using the ask and tell object
+        var x = solution[1][0]
+        var y = solution[1][1]
+
+        expect(x[0]).to.be.greaterThan(0.5).lessThan(1.5)
+        expect(x[1]).to.be.greaterThan(-1.5).lessThan(-0.5)
+        expect(y).to.be.greaterThan(-0.3).lessThan(0.3)
+    })
+})
