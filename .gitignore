@@ -45,3 +45,5 @@ Temporary Items
 
 .idea/
 *.pyc
+
+node_modules
