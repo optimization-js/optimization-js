@@ -47,3 +47,4 @@ Temporary Items
 *.pyc
 
 node_modules
+coverage
