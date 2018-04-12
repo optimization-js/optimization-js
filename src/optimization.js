@@ -133,7 +133,7 @@ var optimjs = (function (exports) {
         // fncvalue: function value at found optimum
         var x = x0.slice();
 
-        var eps = 1e-3; // max abs value of gradient component for termination
+        var eps = 1e-5; // max abs value of gradient component for termination
         var alpha = 0.001; // initial step size
         var m = 5; // history size to keep for Hessian approximation
 

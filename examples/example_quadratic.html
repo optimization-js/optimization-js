@@ -1,0 +1,40 @@
+<html>
+    <head>
+        <title>A simple example of minimization of quadratic function using different methods</title>
+    </head>
+    <body>
+        <h1>Examples of minimization for simple quadratic function.</h1>
+        <h3>Simply open this file in browser to see the library work.</h3>
+        <p>In order to see the source code, open the debugging view in your browser 
+            (e.g. F12 in Chrome), and inspect the sources for the examples.</p>
+        <p>A simple 3d quadratic function is used for minimization.</p>
+        <p id='log_paragraph'></p>
+        <script src="../src/optimization.js"></script>
+        <script src="./example_quadratic.js"></script>
+        <script>
+            // this function is used to output stuff to the html page
+            function logger(value){
+                document.getElementById('log_paragraph').innerHTML += value + '<br>'
+            }
+
+            // the examples!
+            var examples = {
+                'Powell method': example_minimization_powell,
+                'Gradient descent': example_minimization_gd,
+                'L-BFGS': example_minimization_lbfgs
+            }
+
+            for(var name in examples){
+                var example = examples[name];
+                
+                // run the example
+                var solution = example()
+                
+                // report results
+                logger("Method used: " + name)
+                logger("Found objective value: " + solution.fncvalue)
+                logger("Found minimizing argument: " + solution.argument)
+            }
+        </script>
+    </body>
+</html>
