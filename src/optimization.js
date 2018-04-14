@@ -1,4 +1,4 @@
-var optimjs = (function (exports) {
+var optimjs = (function (exports) { 
     // export public members
     exports = exports || {};
     exports.Real = function(low, high){
