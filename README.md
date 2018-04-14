@@ -1,13 +1,13 @@
 # Unconstrained, first and zero order gradient descent in JavaScript
 
-[![Travis build](https://travis-ci.org/optimization-js/optimization-js.svg?branch=master)](https://travis-ci.org/optimization-js/optimization-js)
-[![Codecov branch](https://img.shields.io/codecov/c/github/optimization-js/optimization-js/master.svg)](https://codecov.io/gh/optimization-js/optimization-js)
-[![npm](https://img.shields.io/npm/v/optimization-js.svg)](https://www.npmjs.com/package/optimization-js)
-[![npm](https://img.shields.io/npm/dw/optimization-js.svg)](https://www.npmjs.com/package/optimization-js)
-[![npm](https://img.shields.io/npm/dt/optimization-js.svg)](https://www.npmjs.com/package/optimization-js)
-[![GitHub license](https://img.shields.io/github/license/optimization-js/optimization-js.svg)](https://github.com/optimization-js/optimization-js/blob/master/LICENSE)
+[![Travis build](https://travis-ci.org/optimization-js/optimization-js.svg?branch=master&style=flat-square)](https://travis-ci.org/optimization-js/optimization-js)
+[![Codecov branch](https://img.shields.io/codecov/c/github/optimization-js/optimization-js/master.svg?style=flat-square)](https://codecov.io/gh/optimization-js/optimization-js)
+[![npm](https://img.shields.io/npm/v/optimization-js.svg?style=flat-square)](https://www.npmjs.com/package/optimization-js)
+[![npm](https://img.shields.io/npm/dw/optimization-js.svg?style=flat-square)](https://www.npmjs.com/package/optimization-js)
+[![npm](https://img.shields.io/npm/dt/optimization-js.svg?style=flat-square)](https://www.npmjs.com/package/optimization-js)
+[![GitHub license](https://img.shields.io/github/license/optimization-js/optimization-js.svg?style=flat-square)](https://github.com/optimization-js/optimization-js/blob/master/LICENSE)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg?style=flat-square)](https://github.com/semantic-release/semantic-release)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md#pull-requests)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](CONTRIBUTING.md#pull-requests)
 
 A javascript library implementing useful multivariate function optimization procedures, which allow to find a local minimum of some function of a vector argument. Such argument is a javascript array. 
 
