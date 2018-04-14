@@ -12,6 +12,8 @@
     "report-coverage": "cat ./coverage/lcov.info | codecov",
     "semantic-release": "semantic-release",
     "travis-deploy-once": "travis-deploy-once",
+    "prebuild": "rimraf dist",
+    "build": "webpack --config webpack.config.js",
     "commit": "git-cz"
   },
   "czConfig": {
