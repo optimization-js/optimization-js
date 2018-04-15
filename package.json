@@ -4,7 +4,9 @@
   "description": "Mathematical optimization in JavaScript.",
   "main": "src/optimization.js",
   "directories": {
-    "example": "examples"
+    "example": "examples",
+    "test": "tests",
+    "doc": "docs"
   },
   "scripts": {
     "test": "istanbul cover -x *.test.js _mocha -- -R spec tests/optimization.test.js",
@@ -12,8 +14,9 @@
     "report-coverage": "cat ./coverage/lcov.info | codecov",
     "semantic-release": "semantic-release",
     "travis-deploy-once": "travis-deploy-once",
-    "prebuild": "rimraf dist",
-    "build": "webpack --config webpack.config.js",
+    "document": "rimraf docs && esdoc -c esdoc.json",
+    "makebrowser": "rimraf dist && webpack --config webpack.config.js",
+    "build": "npm run makebrowser && npm run document",
     "commit": "git-cz"
   },
   "czConfig": {
@@ -59,6 +62,8 @@
     "webpack-cli": "2.0.14"
   },
   "dependencies": {
+    "inchjs": "0.4.1",
+    "jsdoc": "3.5.5",
     "semantic-release-cli": "^3.6.6",
     "travis": "0.1.1"
   }

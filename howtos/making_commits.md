@@ -1,3 +1,3 @@
 # How do I make commits to my PR's?
 
-Please refer here: [https://egghead.io/lessons/javascript-writing-conventional-commits-with-commitizen](https://egghead.io/lessons/javascript-writing-conventional-commits-with-commitizen).
+We use semantic release, which means that commit messages should adhere to a particular structure, so that the semantic versioning plugin can parse the commits, and perform automated releasing. For more information on this, please refer here: [https://egghead.io/lessons/javascript-writing-conventional-commits-with-commitizen](https://egghead.io/lessons/javascript-writing-conventional-commits-with-commitizen).

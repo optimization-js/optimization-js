@@ -9,10 +9,12 @@ be any updates to this, it will be stated in this document.
 
 Note: for semantic-release-cli to work properly with your repo, you need to enable TravisCI for this repo first, if you are using TravisCI.
 
-## ES2015 and ES2016 support
-
-We do not use babel to transpile ES6 code, and for now we do not use features of the ES6, which are not supported by default in node, such as imports. However consider that as of April 2018 (when this was written) a wast majority (99%) of the features of ES2015 and ES2016 are supported in recent versions of node: [https://node.green/](https://node.green/). Thusly, we simply avoid using the import functionality. Instead, commonjs "require"s are used.
+Consider a few comments below.
 
 ## Semantic release authentication
 
 Semantic release plugin needs push access to your repo in order to create tags. For that, follow the steps in [this](https://github.com/semantic-release/semantic-release/blob/caribou/docs/recipes/git-auth-ssh-keys.md) document.
+
+## Documentation
+
+You cannot use a library if you do not know how to. Thus documentation is a very important element of optimization-js. We currently use [https://github.com/jsdoc3/jsdoc](https://github.com/jsdoc3/jsdoc) for documentation.

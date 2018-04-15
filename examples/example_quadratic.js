@@ -2,7 +2,7 @@
 if(optimjs == null){ // this is necessary for automated testing of example in node.js
     var optimjs = require('../src/optimization') // this is run in node.js only
 }
-
+ 
 // define some objective function that is to be minimized
 // this is a convex function with the unique global optimum at [1.0, 0.0, -2.0]
 var objective = function (x) {
