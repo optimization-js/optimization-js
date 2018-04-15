@@ -15,6 +15,12 @@ Consider a few comments below.
 
 Semantic release plugin needs push access to your repo in order to create tags. For that, follow the steps in [this](https://github.com/semantic-release/semantic-release/blob/caribou/docs/recipes/git-auth-ssh-keys.md) document.
 
+## Travis on PR's
+
+Above instructions set up some secure variables of Travis, which are not accessible for PR's from outside of the repo. This needs to be solved using [this](https://docs.travis-ci.com/user/pull-requests/#Pull-Requests-and-Security-Restrictions), in order for other's to be able to make PRs to the repository.
+
 ## Documentation
 
 You cannot use a library if you do not know how to. Thus documentation is a very important element of any library, including optimization-js of course :). We currently use [https://github.com/jsdoc3/jsdoc](https://github.com/jsdoc3/jsdoc) for documentation. For tutorial on how to make documentation, see here: [http://usejsdoc.org/](http://usejsdoc.org/).
+
+We use [https://inch-ci.org/](https://inch-ci.org/) for documentation testing. Follow [this](https://inch-ci.org/help/webhook) to set it up for your repository.
