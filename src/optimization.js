@@ -3,7 +3,7 @@
  * @constructor
  * @param {Number} low Lower bound of the values. Lower bound is inclusive.
  * @param {Number} high Upper inclusive bound of the values of dimension. 
- */
+ */ 
 function Real(low, high){
     this.low = low
     this.high = high
