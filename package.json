@@ -17,14 +17,15 @@
     "document": "rimraf docs && jsdoc src/optimization.js -d docs --readme README.md",
     "makebrowser": "rimraf dist && webpack --config webpack.config.js",
     "build": "npm run makebrowser && npm run document",
-    "commit": "git-cz"
+    "commit": "git-cz",
+    "commitall": "npm run build && git add -A && git-cz"
   },
   "czConfig": {
     "path": "node_modules/cz-conventional-changelog"
   },
   "config": {
     "ghooks": {
-      "pre-commit": "npm test && npm run check-coverage && npm run build"
+      "pre-commit": "npm test && npm run check-coverage"
     }
   },
   "repository": {
