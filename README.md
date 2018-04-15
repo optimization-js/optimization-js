@@ -11,7 +11,7 @@
 
 A javascript library implementing useful multivariate function optimization procedures, which allow to find a local minimum of some function of a vector argument. Such argument is a javascript array.
 
-## Example usage
+## Example
 
 Example zero order optimization in JavaScript (no need to provide gradient information!):
 
@@ -37,6 +37,18 @@ var solution = optimjs.minimize_Powell(fnc, x0);
 ```
 
 For more examples, check out `examples` folder. 
+
+## Usage
+
+For use in browser, use this:
+```
+<script src="https://unpkg.com/optimization-js@latest/dist/optimization.js"></script>
+```
+
+In order to use this in node, use npm:
+```bash
+npm install optimization-js
+```
 
 ## Documentation
 

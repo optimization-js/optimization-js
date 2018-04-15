@@ -15,7 +15,7 @@
     "semantic-release": "semantic-release",
     "travis-deploy-once": "travis-deploy-once",
     "document": "rimraf docs && jsdoc src/optimization.js -d docs --readme README.md",
-    "makebrowser": "rimraf dist && webpack --config webpack.config.js",
+    "makebrowser": "rimraf dist && browserify src/optimization.js --standalone optimjs -o dist/optimization.js",
     "build": "npm run makebrowser && npm run document",
     "commit": "git-cz",
     "commitall": "npm run build && git add -A && git-cz"
@@ -58,11 +58,10 @@
     "mocha": "5.0.5",
     "rimraf": "2.6.2",
     "semantic-release": "^15.1.6",
-    "travis-deploy-once": "^4.4.1",
-    "webpack": "4.5.0",
-    "webpack-cli": "2.0.14"
+    "travis-deploy-once": "^4.4.1"
   },
   "dependencies": {
+    "browserify": "16.2.0",
     "inchjs": "0.4.1",
     "jsdoc": "3.5.5",
     "semantic-release-cli": "^3.6.6",

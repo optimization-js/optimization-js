@@ -1,7 +1,6 @@
 # I want to use the setup in this library in my project!
 
 Great! Beyond the getting familiar with other .md files in the `howtos` folder, check out this excellent sequence of tutorials:
-
 [https://egghead.io/lessons/javascript-introduction-to-how-to-write-an-open-source-javascript-library](https://egghead.io/lessons/javascript-introduction-to-how-to-write-an-open-source-javascript-library)
 
 The setup in the library, such as CI and unit testing, is largely based on this tutorial. If there will
@@ -13,9 +12,17 @@ Consider a few comments below.
 
 ## Semantic release authentication
 
-Semantic release plugin needs push access to your repo in order to create tags. For that, follow the steps in [this](https://github.com/semantic-release/semantic-release/blob/caribou/docs/recipes/git-auth-ssh-keys.md) document.
+Semantic release plugin needs push access to your repo in order to create tags. Use this to setup proper access: (this)[https://docs.travis-ci.com/user/environment-variables/#Defining-encrypted-variables-in-.travis.yml]
 
-This however does not seem to be working. Use this in addition: (this)[https://docs.travis-ci.com/user/environment-variables/#Defining-encrypted-variables-in-.travis.yml]
+In case above is not enough, follow the steps in [this](https://github.com/semantic-release/semantic-release/blob/caribou/docs/recipes/git-auth-ssh-keys.md) document. @iaroslav-ai originally tried to set up access with ssh, but this did not work somehow. Stuff started to work when github token was used.
+
+## We use browserify instead of webpack
+
+This seems like a bit easier option compared to webpack. See more [here](http://browserify.org/).
+
+## Distribution of browserify generated browser lib
+
+We use https://unpkg.com/ for this task.
 
 ## Travis on PR's
 
