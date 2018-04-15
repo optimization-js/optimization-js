@@ -24,7 +24,7 @@
   },
   "config": {
     "ghooks": {
-      "pre-commit": "npm test && npm run check-coverage && npm build"
+      "pre-commit": "npm test && npm run check-coverage && npm run build"
     }
   },
   "repository": {
