@@ -386,6 +386,7 @@ var optimjs = (function (exports) {
         return true;
     };
 
+    
     return exports;
 
 })(typeof module != 'undefined' && module.exports);  // add exports to module.exports if in node.js
