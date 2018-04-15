@@ -8,6 +8,10 @@ function Real(low, high){
     this.low = low
     this.high = high
 
+    /**
+     * Generate random uniformly distributed scalar sample from dimension space.
+     * @returns {Number} Sample value.
+     */
     this.random_sample = function(){
         /* Returns a uniformly sampled value from the space */
         return Math.random()*(this.high - this.low) + this.low
