@@ -15,6 +15,8 @@ Consider a few comments below.
 
 Semantic release plugin needs push access to your repo in order to create tags. For that, follow the steps in [this](https://github.com/semantic-release/semantic-release/blob/caribou/docs/recipes/git-auth-ssh-keys.md) document.
 
+This however does not seem to be working. Use this in addition: (this)[https://docs.travis-ci.com/user/environment-variables/#Defining-encrypted-variables-in-.travis.yml]
+
 ## Travis on PR's
 
 Above instructions set up some secure variables of Travis, which are not accessible for PR's from outside of the repo. This needs to be solved using [this](https://docs.travis-ci.com/user/pull-requests/#Pull-Requests-and-Security-Restrictions), in order for other's to be able to make PRs to the repository.

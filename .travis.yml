@@ -18,11 +18,11 @@ branches:
   only:
   - master
 before_install:
-- openssl aes-256-cbc -K $encrypted_59c1297eb011_key -iv $encrypted_59c1297eb011_iv -in git_deploy_key.enc -out /tmp/git_deploy_key -d
+- openssl aes-256-cbc -K $encrypted_59c1297eb011_key -iv $encrypted_59c1297eb011_iv
+  -in git_deploy_key.enc -out /tmp/git_deploy_key -d
 - chmod 600 /tmp/git_deploy_key
-# Create a script to return the passphrase environment variable to ssh-add
 - echo 'echo ${SSH_PASSPHRASE}' > /tmp/askpass && chmod +x /tmp/askpass
-# Start the authentication agent
 - eval "$(ssh-agent -s)"
-# Add the key to the authentication agent
 - DISPLAY=":0.0" SSH_ASKPASS="/tmp/askpass" setsid ssh-add /tmp/git_deploy_key </dev/null
+env:
+  secure: XwvZMarIdEuzlquIy0RNmBAundhnYo4oyEUW6SoiYYEO+X+UW+S8cjllAFEUSqAxO/50ioonaY+f2yaqXvTnGdAlmUonWqmjgojpzpdT+we4AcO2uSi1Yw1SKAELBpCZ46PXelVVxEOQB56Tl/oe5ns2UMVu7FtFO1/qbZ4MUVNpJZ7wDQW0oxHSms3JMKhRjufcVdfdqYRR7i9dgKiuD2b04L4SghvkKX7Fz667fUE+qWjFC11kVEUoPzm18igSN8SkfAmflm4YeEbCfuPQNeNTRu+05bI52qZhzh/hcEDQ5nhX2RVYnx9jEVh8kx4VHEhrvlFJIV3tXYyUeswtxKzpFe7pq7cTo+GrRUrX4xDA38wqjZIfoP9YqiDkZG9LBIAhZxZTStJJD9X3BZn027JE1En835tM9YPt8RP1vG2zcHEI3Hwg/vZ7gVpJ4UEeZL9Fciw0Yz8QTDU5DmXAj0c6RKbj2rlL7kVbWPa87hX2gE4KRqqt55Bw7fBh1nrBoEohzL8aL64yn21XLqlm3ZwnbgDl1o9WyVPt30Eh5awaoWI1RRGEEre7mpx1Ig46FUg/UzQb5RHZPIfqUuptoj6N8EMoO+9ouj4Phk0rCDIBC7+9wPTlzX/WwRWydv54W4nHba4MR8RE6fXm4hfHKzFz7wakx1/cGi1fhind3Bc=
