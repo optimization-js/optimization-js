@@ -12,6 +12,7 @@ after_success:
 - npm run test
 - npm run check-coverage
 - npm run report-coverage
+- npm run build
 - npm run travis-deploy-once "npm run semantic-release"
 branches:
   only:
