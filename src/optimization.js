@@ -139,7 +139,7 @@ module.exports.RandomOptimizer = function(space){
  * While naive, such approach is often surprisingly competitive
  * for hyperparameter tuning purposes. Internally uses {@link RandomOptimizer}
  * class to perform optimization.
- * @param {function} func Function to be minimized.
+ * @param {function} fnc Function to be minimized.
  * @param {Array} dims An array of dimensions, that describe a search space for minimization,
  * or an instance of {@link Space} object.
  * @param {Number} [n_calls=64] Function evaluation budget. The function will be evaluated for
@@ -161,7 +161,7 @@ module.exports.dummy_minimize = dummy_minimize
 
 /**
  * Minimize an unconstrained function using zero order Powell algorithm.
- * @param {function} func Function to be minimized. This function takes 
+ * @param {function} fnc Function to be minimized. This function takes 
  * array of size N as an input, and returns a scalar value as output, 
  * which is to be minimized.
  * @param {Array} x0 An array of values of size N, which is an initialization
@@ -227,7 +227,7 @@ module.exports.minimize_Powell = function (fnc, x0) {
 
 /**
  * Minimize an unconstrained function using first order gradient descent algorithm.
- * @param {function} func Function to be minimized. This function takes 
+ * @param {function} fnc Function to be minimized. This function takes 
  * array of size N as an input, and returns a scalar value as output, 
  * which is to be minimized.
  * @param {function} grd A gradient function of the objective.
@@ -293,7 +293,7 @@ module.exports.minimize_GradientDescent = function (fnc, grd, x0) {
 
 /**
  * Minimize an unconstrained function using first order L-BFGS algorithm.
- * @param {function} func Function to be minimized. This function takes 
+ * @param {function} fnc Function to be minimized. This function takes 
  * array of size N as an input, and returns a scalar value as output, 
  * which is to be minimized.
  * @param {function} grd A gradient function of the objective.
