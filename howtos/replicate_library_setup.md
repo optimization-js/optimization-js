@@ -17,4 +17,4 @@ Semantic release plugin needs push access to your repo in order to create tags. 
 
 ## Documentation
 
-You cannot use a library if you do not know how to. Thus documentation is a very important element of optimization-js. We currently use [https://github.com/jsdoc3/jsdoc](https://github.com/jsdoc3/jsdoc) for documentation.
+You cannot use a library if you do not know how to. Thus documentation is a very important element of any library, including optimization-js of course :). We currently use [https://github.com/jsdoc3/jsdoc](https://github.com/jsdoc3/jsdoc) for documentation. For tutorial on how to make documentation, see here: [http://usejsdoc.org/](http://usejsdoc.org/).

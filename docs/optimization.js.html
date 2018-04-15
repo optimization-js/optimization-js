@@ -1,4 +1,32 @@
-/**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: optimization.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: optimization.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
  * Dimension of real type. 
  * @constructor
  * @param {Number} low Lower bound of the values. Lower bound is inclusive.
@@ -36,7 +64,7 @@ function Space(dimensions){
     this.random_samples = function(n){
         /*Sample n points from space at random.*/
         var X = []
-        for(var i = 0; i < n; i++){
+        for(var i = 0; i &lt; n; i++){
             var x = []
             for(var dim of this.dims){
                 x.push(dim.random_sample())
@@ -104,8 +132,8 @@ module.exports.RandomOptimizer = function(space){
         /* Record new observed points. 
         Do not really need to do it for random sampling.*/
         
-        for(var i = 0; i < X.length; i++){
-            if(this.best_y == null || Y[i] < this.best_y){
+        for(var i = 0; i &lt; X.length; i++){
+            if(this.best_y == null || Y[i] &lt; this.best_y){
                 this.best_y = Y[i]
                 this.best_x = X[i]
             }
@@ -135,7 +163,7 @@ module.exports.RandomOptimizer = function(space){
  function dummy_minimize (func, dims, n_calls=64){
     var opt = new module.exports.RandomOptimizer(dims);
 
-    for(var iter=0; iter < n_calls; iter++){
+    for(var iter=0; iter &lt; n_calls; iter++){
         var x = opt.ask()
         var y = func(x)
         opt.tell([x], [y])
@@ -172,7 +200,7 @@ module.exports.minimize_Powell = function (fnc, x0) {
         convergence = true;
 
         // Perform update over all of the variables in random order
-        for (var i = 0; i < indicies.length; i++) {
+        for (var i = 0; i &lt; indicies.length; i++) {
 
             x[indicies[i]] += 1e-6;
             var fxi = fnc(x);
@@ -260,7 +288,7 @@ module.exports.minimize_GradientDescent = function (fnc, grd, x0) {
             vect_x_pluseq_ag(xn, -alpha, g); // perform step
             var fx = fnc(xn);
 
-            repeat = pfx < fx;
+            repeat = pfx &lt; fx;
             // this automatically selects step size 
             alpha = repeat ? alpha * 0.7 : alpha * 1.1;
         }
@@ -317,9 +345,9 @@ module.exports.minimize_L_BFGS = function (fnc, grd, x0) {
         var xn = x.slice();
         vect_x_pluseq_ag(xn, alpha, direction); // perform step
         var fx = fnc(xn);
-        alpha = pfx < fx ? alpha * 0.5 : alpha * 1.2; // magic!
+        alpha = pfx &lt; fx ? alpha * 0.5 : alpha * 1.2; // magic!
 
-        //  < ================= apply limited memory BFGS procedure ================= >
+        //  &lt; ================= apply limited memory BFGS procedure ================= >
         var gn = grd(xn);
 
         if (vect_max_abs_x_less_eps(gn, eps)) {
@@ -343,7 +371,7 @@ module.exports.minimize_L_BFGS = function (fnc, grd, x0) {
         var r = g.slice();
         var a = new Array(s.length);
 
-        for (var i = 0; i < s.length; i++) {
+        for (var i = 0; i &lt; s.length; i++) {
             var pi = 1 / (dot(s[i], y[i]));
             a[i] = pi * dot(s[i], r);
             vect_x_pluseq_ag(r, -a[i], y[i]);
@@ -351,11 +379,11 @@ module.exports.minimize_L_BFGS = function (fnc, grd, x0) {
 
         // perform Hessian scaling
         var scale = dot(dx, dg) / dot(dg, dg);
-        for (var i = 0; i < r.length; i++) {
+        for (var i = 0; i &lt; r.length; i++) {
             r[i] = r[i] * scale;
         }
 
-        for (var i = 0; i < s.length; i++) {
+        for (var i = 0; i &lt; s.length; i++) {
             var j = s.length - i - 1;
             var pj = 1 / (dot(s[j], y[j]));
             var beta = pj * dot(y[j], r);
@@ -363,9 +391,9 @@ module.exports.minimize_L_BFGS = function (fnc, grd, x0) {
         }
         direction = r.slice();
 
-        //  < ================= apply limited memory BFGS procedure ================= >
+        //  &lt; ================= apply limited memory BFGS procedure ================= >
         
-        for (var i = 0; i < direction.length; i++) {
+        for (var i = 0; i &lt; direction.length; i++) {
             direction[i] = -direction[i];
         }
 
@@ -388,7 +416,7 @@ module.exports.minimize_L_BFGS = function (fnc, grd, x0) {
     var fx = fnc(x);
     var h = 1e-6; // step size
 
-    for (var i = 0; i < x.length; i++) {
+    for (var i = 0; i &lt; x.length; i++) {
 
         // approximation using simple forward difference
         x[i] += h;
@@ -403,10 +431,10 @@ module.exports.minimize_L_BFGS = function (fnc, grd, x0) {
 function shuffleIndiciesOf (array) {
     // returns shuffled indicies of arrray
     var idx = [];
-    for (var i = 0; i < array.length; i++) {
+    for (var i = 0; i &lt; array.length; i++) {
         idx.push(i);
     }
-    for (var i = 0; i < array.length; i++) {
+    for (var i = 0; i &lt; array.length; i++) {
         var j = Math.floor(Math.random() * i);
         var tmp = idx[i];
         idx[i] = idx[j];
@@ -418,7 +446,7 @@ function shuffleIndiciesOf (array) {
 function dot (a, b) {
     // computes dot product
     var result = 0;
-    for (var i = 0; i < a.length; i++) {
+    for (var i = 0; i &lt; a.length; i++) {
         result += a[i] * b[i];
     }
     return result;
@@ -428,7 +456,7 @@ function dot (a, b) {
 function vect_a_minus_b (a, b) {
     // vector difference
     var result = new Array(a.length);
-    for (var i = 0; i < a.length; i++) {
+    for (var i = 0; i &lt; a.length; i++) {
         result[i] = a[i] - b[i];
     }
     return result;
@@ -437,7 +465,7 @@ function vect_a_minus_b (a, b) {
 
 function vect_x_pluseq_ag (x, a, g) {
     // used for fixed step size updating value of x
-    for (var i = 0; i < x.length; i++) {
+    for (var i = 0; i &lt; x.length; i++) {
         x[i] = x[i] + a * g[i];
     }
 
@@ -447,10 +475,32 @@ function vect_x_pluseq_ag (x, a, g) {
 
 function vect_max_abs_x_less_eps (x, eps) {
     // this procedure is used for stopping criterion check
-    for (var i = 0; i < x.length; i++) {
+    for (var i = 0; i &lt; x.length; i++) {
         if (Math.abs(x[i]) >= eps) {
             return false;
         }
     }
     return true;
-};
+};</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="RandomOptimizer.html">RandomOptimizer</a></li><li><a href="Real.html">Real</a></li><li><a href="Space.html">Space</a></li></ul><h3>Global</h3><ul><li><a href="global.html#dummy_minimize">dummy_minimize</a></li><li><a href="global.html#minimize_GradientDescent">minimize_GradientDescent</a></li><li><a href="global.html#minimize_L_BFGS">minimize_L_BFGS</a></li><li><a href="global.html#minimize_Powell">minimize_Powell</a></li><li><a href="global.html#to_space">to_space</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Apr 15 2018 15:05:19 GMT+0200 (CEST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

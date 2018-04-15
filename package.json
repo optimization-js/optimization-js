@@ -14,7 +14,7 @@
     "report-coverage": "cat ./coverage/lcov.info | codecov",
     "semantic-release": "semantic-release",
     "travis-deploy-once": "travis-deploy-once",
-    "document": "rimraf docs && esdoc -c esdoc.json",
+    "document": "rimraf docs && jsdoc src/optimization.js -d docs --readme README.md",
     "makebrowser": "rimraf dist && webpack --config webpack.config.js",
     "build": "npm run makebrowser && npm run document",
     "commit": "git-cz"
