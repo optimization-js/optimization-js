@@ -81,6 +81,7 @@ module.exports.to_space = function(space_object){
  * @property {Array} best_x An argument that results in minimal objective
  * function value.
  * @property {Number} best_y Minimal objective value observed.
+ * @property {Space} space Optimization space over which the optimization is done.
  */
 module.exports.RandomOptimizer = function(space){
     this.space = module.exports.to_space(space)
@@ -89,9 +90,14 @@ module.exports.RandomOptimizer = function(space){
     this.best_x = null
     this.best_y = null
 
+    /**
+     * Get the next point or array of points to evaluate.
+     * @param {Number} n Specifies how many points should be provided by
+     * the optimizer algorithm to try in parallel. If specified, an array
+     * of points to evaluate is returned. If not, only a single point is 
+     * returned verbatium.
+     */
     this.ask = function(n=null){
-        /* Returns the next n points to try */
-        // if n is not specified, return a single point verbatium
         if(n == null){
             return this.space.random_samples(1)[0]
         }
@@ -100,10 +106,15 @@ module.exports.RandomOptimizer = function(space){
         return this.space.random_samples(n)
     }
 
+    /**
+     * Report back to the optimizer the points that were tried. Do not 
+     * really need to do it for random sampling, but this is here for 
+     * consistency with future more "intelligent" algorithms.
+     * @param {Array} X Array of observed points.
+     * @param {Array} Y Array of objective values corresponding to the 
+     * points that were evaluated.
+     */
     this.tell = function(X, Y){
-        /* Record new observed points. 
-        Do not really need to do it for random sampling.*/
-        
         for(var i = 0; i < X.length; i++){
             if(this.best_y == null || Y[i] < this.best_y){
                 this.best_y = Y[i]
@@ -115,7 +126,6 @@ module.exports.RandomOptimizer = function(space){
         this.X = this.X.concat(X)
         this.Y = this.Y.concat(Y)
 
-        // create the optimization result object
     }
 
 }
@@ -400,8 +410,12 @@ module.exports.minimize_L_BFGS = function (fnc, grd, x0) {
     return grad;
 };*/
 
+/**
+ * Shuffles indicies of arrray.
+ * @ignore
+ * @param {Array} array Array to shuffle.
+ */
 function shuffleIndiciesOf (array) {
-    // returns shuffled indicies of arrray
     var idx = [];
     for (var i = 0; i < array.length; i++) {
         idx.push(i);
@@ -415,8 +429,13 @@ function shuffleIndiciesOf (array) {
     return idx;
 };
 
+/**
+ * Computes dot product.
+ * @ignore
+ * @param {Array} a First vector argument.
+ * @param {Array} b Second vector argument.
+ */
 function dot (a, b) {
-    // computes dot product
     var result = 0;
     for (var i = 0; i < a.length; i++) {
         result += a[i] * b[i];
@@ -425,8 +444,13 @@ function dot (a, b) {
 
 };
 
+/**
+ * Substracts vectors.
+ * @ignore
+ * @param {Array} a First vector argument.
+ * @param {Array} b Second vector argument.
+ */
 function vect_a_minus_b (a, b) {
-    // vector difference
     var result = new Array(a.length);
     for (var i = 0; i < a.length; i++) {
         result[i] = a[i] - b[i];
@@ -435,8 +459,14 @@ function vect_a_minus_b (a, b) {
 
 };
 
+/**
+ * Fixed step size updating value of x.
+ * @ignore
+ * @param {Array} x First vector argument.
+ * @param {Number} a Step size.
+ * @param {Array} g Gradient.
+ */
 function vect_x_pluseq_ag (x, a, g) {
-    // used for fixed step size updating value of x
     for (var i = 0; i < x.length; i++) {
         x[i] = x[i] + a * g[i];
     }
@@ -445,6 +475,13 @@ function vect_x_pluseq_ag (x, a, g) {
 
 };
 
+/**
+ * Checks whether absolute values in a vector are greater than 
+ * some threshold.
+ * @ignore
+ * @param {Array} x Vector that is checked.
+ * @param {Number} eps Threshold.
+ */
 function vect_max_abs_x_less_eps (x, eps) {
     // this procedure is used for stopping criterion check
     for (var i = 0; i < x.length; i++) {
