@@ -1,6 +1,6 @@
 {
   "name": "optimization-js",
-  "version": "0.0.0-development",
+  "version": "1.0.1-development",
   "description": "Mathematical optimization in JavaScript.",
   "main": "src/optimization.js",
   "directories": {
