@@ -59,6 +59,7 @@
     "webpack-cli": "2.0.14"
   },
   "dependencies": {
-    "semantic-release-cli": "^3.6.6"
+    "semantic-release-cli": "^3.6.6",
+    "travis": "0.1.1"
   }
 }

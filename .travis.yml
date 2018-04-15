@@ -1,18 +1,27 @@
 language: node_js
 cache:
   directories:
-    - ~/.npm
+  - "~/.npm"
 notifications:
   email: false
 node_js:
-  - '9'
-  - '8'
-  - '6'
+- '9'
+- '8'
+- '6'
 after_success:
-  - npm run test
-  - npm run check-coverage
-  - npm run report-coverage
-  - npm run travis-deploy-once "npm run semantic-release"
+- npm run test
+- npm run check-coverage
+- npm run report-coverage
+- npm run travis-deploy-once "npm run semantic-release"
 branches:
   only:
-    - master
+  - master
+before_install:
+- openssl aes-256-cbc -K $encrypted_59c1297eb011_key -iv $encrypted_59c1297eb011_iv -in git_deploy_key.enc -out /tmp/git_deploy_key -d
+- chmod 600 /tmp/git_deploy_key
+# Create a script to return the passphrase environment variable to ssh-add
+- echo 'echo ${SSH_PASSPHRASE}' > /tmp/askpass && chmod +x /tmp/askpass
+# Start the authentication agent
+- eval "$(ssh-agent -s)"
+# Add the key to the authentication agent
+- DISPLAY=":0.0" SSH_ASKPASS="/tmp/askpass" setsid ssh-add /tmp/git_deploy_key </dev/null
