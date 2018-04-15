@@ -1,4 +1,4 @@
-var optimjs = (function (exports) {
+var optimjs = (function (exports) { 
     // export public members
     exports = exports || {};
     exports.Real = function(low, high){
@@ -386,6 +386,7 @@ var optimjs = (function (exports) {
         return true;
     };
 
+    
     return exports;
 
 })(typeof module != 'undefined' && module.exports);  // add exports to module.exports if in node.js
