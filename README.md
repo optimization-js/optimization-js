@@ -1,4 +1,4 @@
-# Unconstrained, first and zero order gradient descent in JavaScript
+# Mathematical Optimization in JavaScript
 
 [![Travis build](https://travis-ci.org/optimization-js/optimization-js.svg?branch=master&style=flat-square)](https://travis-ci.org/optimization-js/optimization-js)
 [![Codecov branch](https://img.shields.io/codecov/c/github/optimization-js/optimization-js/master.svg?style=flat-square)](https://codecov.io/gh/optimization-js/optimization-js)
