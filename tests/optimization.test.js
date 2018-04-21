@@ -99,4 +99,36 @@ describe('Space', function(){
             'Unknown space definition'
         )
     })
+    it('should work with integer dimensions', function(){
+        // test creation of the Integer dimension
+        var dim = new optimjs.Integer(0, 3)
+        
+        // test the values returned by the integer value
+        var r = {}
+
+        // remember a bunch of unique values returned by the sampling
+        for(var i = 0; i < 100; i++){
+            var sample = dim.random_sample()
+            r[sample] = 1
+        }
+
+        // confirm that the whole range is sampled, no more, no less
+        expect(r).to.deep.equal({0:1, 1:1, 2:1, 3:1});
+    })
+    it('should work with categorical dimensions', function(){
+        // test creation of the Integer dimension
+        var dim = new optimjs.Categorical(['a', 1, 2.0, 'zazz', true])
+        
+        // test the values returned by the integer value
+        var r = {}
+
+        // remember a bunch of unique values returned by the sampling
+        for(var i = 0; i < 100; i++){
+            var sample = dim.random_sample()
+            r[sample] = 1
+        }
+
+        // confirm that the whole range is sampled, no more, no less
+        expect(r).to.deep.equal({'a':1, 1:1, 2.0:1, 'zazz': 1, true:1});
+    })
 })

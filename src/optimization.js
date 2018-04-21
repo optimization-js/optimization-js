@@ -18,6 +18,51 @@ function Real(low, high){
     }
 }
 module.exports.Real = Real;
+/**
+ * Dimension of integer type. 
+ * @constructor
+ * @param {Integer} low Lower bound of the values. Lower bound is inclusive.
+ * @param {Integer} high Upper inclusive bound of the values of dimension. 
+ */
+function Integer(low, high){
+    this.low = low
+    this.high = high
+
+    /**
+     * Generate random uniformly distributed integer sample from dimension space.
+     * @returns {Number} Sample value.
+     */
+    this.random_sample = function(){
+        /* Returns a uniformly sampled value from the space */
+        var result = Math.random()*(this.high - this.low) + this.low
+        return Math.round(result)
+    }
+}
+module.exports.Integer = Integer;
+/**
+ * Dimension of categorical type. Values of the dimension can be a mix of integer,
+ * float, string and boolean values (tested) as well as it is expected that other
+ * javascript types should work. 
+ * @constructor
+ * @param {Array} categories A set of all feasible values for the dimension. For
+ * example, it could be ['a', 1, 2.0, 'zazz', true].
+ */
+function Categorical(categories){
+    this.categories = categories
+
+    /**
+     * Generate random uniformly distributed integer sample from dimension space.
+     * @returns {Number} Sample value.
+     */
+    this.random_sample = function(){
+        /* Returns a uniformly sampled value from the array of categorical values */
+        var N = this.categories.length
+        // index of value to be returned
+        var index = Math.round(Math.random()*(N-1))
+        return this.categories[index]
+    }
+}
+module.exports.Categorical = Categorical;
 
 /**
  * An object that represents a search space for an optimization problem. 
