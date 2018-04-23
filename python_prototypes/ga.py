@@ -159,11 +159,16 @@ class GeneticOptimizer:
         self.yi.append(y)
 
 
-def ga_minimize(func, dimensions, n_calls=100, n_random_starts=10):
+def ga_minimize(func, dimensions, n_calls=64, n_random_starts=10, tournament_fraction=0.2, mutation_rate=0.05):
     """
     Use the GeneticOptimizer here
     """
-    optimizer = GeneticOptimizer(dimensions=dimensions, n_random_starts=n_random_starts)
+    optimizer = GeneticOptimizer(
+        dimensions=dimensions, 
+        n_random_starts=n_random_starts,
+        tournament_fraction=tournament_fraction,
+        mutation_rate=mutation_rate
+    )
 
     for i in range(n_calls):
         x = optimizer.ask()
