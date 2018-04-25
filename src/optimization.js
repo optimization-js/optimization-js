@@ -82,7 +82,7 @@ function Space(dimensions){
      * @param {Integer} n Number of points to sample.
      * @returns {Arrray} An array of vectors containing sampled values.
      */
-    this.random_samples = function(n){
+    this.rsv = function(n){
         /*Sample n points from space at random.*/
         var X = []
         for(var i = 0; i < n; i++){
@@ -148,11 +148,11 @@ module.exports.RandomOptimizer = function(space){
      */
     this.ask = function(n=null){
         if(n == null){
-            return this.space.random_samples(1)[0]
+            return this.space.rsv(1)[0]
         }
 
         // return array of points
-        return this.space.random_samples(n)
+        return this.space.rsv(n)
     }
 
     /**
