@@ -1,0 +1,24 @@
+{
+	"train": {
+		"ga_minimize": 3.67,
+		"hyperopt_minimize": 4.0,
+		"rs_minimize": 2.05,
+		"forest_minimize": 3.56,
+		"gp_minimize": 1.35,
+		"dummy_minimize": 5.94,
+		"gbrt_minimize": 2.51,
+		"smac_minimize": 4.97,
+		"gpyopt_minimize": 1.05
+	},
+	"test": {
+		"ga_minimize": 3.78,
+		"hyperopt_minimize": 4.42,
+		"rs_minimize": 2.42,
+		"forest_minimize": 2.31,
+		"gp_minimize": 2.31,
+		"dummy_minimize": 6.42,
+		"gbrt_minimize": 3.57,
+		"smac_minimize": 4.26,
+		"gpyopt_minimize": 1.47
+	},
+}

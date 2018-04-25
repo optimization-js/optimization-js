@@ -33,10 +33,13 @@ class AgloObjective():
             partition = self.partitions['test'] if i % 3 == 0 else self.partitions['train']
             partition.append(tasks[i])
     
-    def evaluate(self, fnc, params, mode="train"):
+    def evaluate(self, fnc, params=None, mode="train"):
         partition = self.partitions[mode]
 
-        wrapper = AlgoWrapper(fnc, params)        
+        if params is not None:
+            wrapper = AlgoWrapper(fnc, params)        
+        else:
+            wrapper = fnc
 
         r = parallel_evaluate(
             solvers=[wrapper],
