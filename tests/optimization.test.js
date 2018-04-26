@@ -49,10 +49,10 @@ describe('Examples', function(){
 
 var bb_examples = require('../examples/example_black_box.js')
 
-describe('Random optimizer', function(){
-    it('example runs a-ok', function(){
+describe('Ask and tell optimizers', function(){
+    it('examples of quadratic minimization runs ok', function(){
         // minimum of below: x = [1.0, -1.0]
-        var solution = bb_examples.example_bb_random_optimization();
+        var solution = bb_examples.example_bb_optimization();
 
         // solution using *_minimize method 
         var x = solution[0][0]
@@ -69,6 +69,14 @@ describe('Random optimizer', function(){
         expect(x[0]).to.be.greaterThan(0.5).lessThan(1.5)
         expect(x[1]).to.be.greaterThan(-1.5).lessThan(-0.5)
         expect(y).to.be.greaterThan(-0.3).lessThan(0.3)
+    })
+    it('example of mixed optimization runs ok', function(){
+        var solution = bb_examples.example_bb_mixed_minimization();
+        var x = solution.best_x
+
+        expect(x[0]).to.be.greaterThan(-3.1).lessThan(-2.9)
+        expect(x[1]).to.be.greaterThan(62).lessThan(66)
+        expect(x[2]).to.be.equal('relu')
     })
     it('allows to sample n points at a time', function(){
         var optimizer = new optimjs.RandomOptimizer([

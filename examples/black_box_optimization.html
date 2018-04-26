@@ -9,8 +9,7 @@
         <h3>Simply open this file in browser to see the library work.</h3>
         <p>In order to see the source code, open the debugging view in your browser 
             (e.g. F12 in Chrome), and inspect the sources for the examples.</p>
-        <p>A simple 2d quadratic function is used for minimization.</p>
-        <script src="../src/optimization.js"></script>
+        <script src="../dist/optimization.js"></script>
         <script src="./example_black_box.js"></script>
         <p>Black box optimization is concerned with optimization of functions
             which typically have no analyticall expression, are expensive to
@@ -23,23 +22,23 @@
         function logger(value){
                 document.getElementById('log_paragraph').innerHTML += value + '<br>'
             }
-
-        // the examples!
-        var examples = {
-            'Random optimizer': example_bb_random_optimization,
-        }
-
-        for(var name in examples){
-            var example = examples[name];
             
-            // run the example
-            var solution = example()
-            
-            // report results
-            logger("Method used: " + name)
-            logger("Found minimizing argument: " + solution[0][0])
-            logger("Found objective value: " + solution[0][1])
-        }
+        // see the code of examples by following the function definition
+        var solution = example_bb_mixed_minimization()
+        logger("Random Step Optimizer applied to a neural network training simulator:")
+        logger("# of iterations: 256")
+        logger("Known optimal parameters: [-3.0, 64, 'relu']")
+        logger("Found parameters:" + solution.best_x)
+
+        logger("")
+
+        var solution = example_bb_optimization();
+        logger("Random Optimizer applied to quadratic function:")
+        logger("# of iterations: 256")
+        logger("Known optimal parameters: [1.0, -1.0]")
+        logger("Found minimizing argument: " + solution[0][0])
+        logger("Found objective value: " + solution[0][1])
+
         </script>
     </body>
 </html>

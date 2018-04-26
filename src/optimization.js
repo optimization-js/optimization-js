@@ -74,7 +74,7 @@ module.exports.Categorical = Categorical;
  */
 function Space(dimensions){
     /*Stores a set of dimensions and provides convenience funcs */
-    this.dims = dimensions;
+    this.dimensions = dimensions;
 
     /**
      * Sample n points from the search space at random. Sampling is done
@@ -87,7 +87,7 @@ function Space(dimensions){
         var X = []
         for(var i = 0; i < n; i++){
             var x = []
-            for(var dim of this.dims){
+            for(var dim of this.dimensions){
                 x.push(dim.random_sample())
             }
             X.push(x)
@@ -180,19 +180,187 @@ module.exports.RandomOptimizer = function(space){
 }
 
 /**
+ * A class that performs optimization via random permutations to the best
+ * found point thus far. Such approach in particular yields pretty promising
+ * results on the SigOpt's "evalset" set of problems for example.
+ * @param {Array} dimensions A list of dimensions or a {@link Space} object. 
+ * Describes the space of values over which a function will be optimized.
+ * @param {Integer} n_random_starts Determines how many points wil be generated
+ * initially at random. The points are not generated at random after this
+ * number of evaluations has been reported to the optimizer.
+ * @param {Number} mutation_rate A value in the range of (0.0, 1.0]
+ * @property {Array} X An array of arguments tried.
+ * @property {Array} Y An array of function values observed. The 
+ * order corresponds to the order in arguments array.
+ * @property {Array} best_x An argument that results in minimal objective
+ * function value.
+ * @property {Number} best_y Minimal objective value observed.
+ * @property {Space} space Optimization space over which the optimization is done.
+ */
+function RandomStepOptimizer(dimensions, n_random_starts = 13, mutation_rate = 0.1) {
+
+    this.space = module.exports.to_space(dimensions);
+    this.n_random_starts = n_random_starts;
+    this.mutation_rate = mutation_rate;
+    this.n_random_starts_ = n_random_starts;
+    this.X = []
+    this.Y = []
+    this.best_x = null
+    this.best_y = null
+
+    /*
+    * Generates a boolean value at random. Is used for random mutations. 
+    * @param {Number} p Probability of generation of true value 
+    * @returns {Boolean} a randomly generated boolean value. 
+    */
+    this.rnd = function (p = null) {
+
+        // by default use mutation rate as probability
+        if (p == null) {
+            p = this.mutation_rate;
+        }
+
+        if (Math.random() < p) {
+            return true;
+        }
+
+        return false
+
+    } // end rnd
+
+    /**
+    * Generates the next point to evaluate. Different points will be generated for multiple calls, which can be used for parallelisation of optimization. 
+    * @returns {Array} a point to evaluate. 
+    */
+    this.ask = function () {
+
+        // the usual initialization with random sampling from search space
+        if (this.n_random_starts_ > 0) {
+            return this.space.rsv(1)[0];
+        } // end random
+
+        finished = false;
+
+        while (!finished) {
+            // loop necessary to ensure that mutated value is generated
+
+            var result = []
+
+            var best_x = this.X[0]
+            var best_y = this.Y[0]
+
+            for (var i = 1; i < this.Y.length; i++) {
+                if (this.Y[i] < best_y) {
+                    best_x = this.X[i]
+                    best_y = this.Y[i]
+                }
+            }
+
+            for (var i = 0; i < this.space.dimensions.length; i++) {
+                var v = best_x[i];
+                var dim = this.space.dimensions[i];
+
+                if (dim instanceof Categorical && this.rnd()) {
+                    // select a new category here at random
+                    var sell = Math.round(Math.random() * (dim.categories.length - 1))
+
+                    v = dim.categories[sell]
+                    finished = true;
+
+                } // end handling categorical
+
+                if ((dim instanceof Real || (dim instanceof Integer)) && this.rnd()) {
+
+                    var low = dim.low;
+                    var high = dim.high;
+
+                    for (var pw = -16; pw <= 1; pw++) {
+
+                        if (this.rnd()) {
+                            finished = true;
+
+                            if (this.rnd(0.5)) { // determine the sign here
+                                diff = high - v
+                            } else {
+                                diff = low - v
+                            }
+
+                            v = v + diff * Math.pow(2, pw)
+
+                        } // end exp change
+
+                    }  // end handling the exponential change
+
+                    // clamp the dimension
+                    if (v < low) {
+                        v = low;
+                    }
+
+                    if (v > high) {
+                        v = high;
+                    }
+
+                    // round the dimension if it is integer
+                    if (dim instanceof Integer) {
+                        v = Math.round(v);
+                    }
+
+                } // end handling of the ordered type dimensions
+
+                result.push(v);
+
+            } // end dimension enumeration
+
+        } // end while loop of sampling
+
+        return result;
+
+    } // end of ask function 
+
+    /**
+    *Function for reporting of the observed function values
+    * @param {Array} X Array of observed points.
+    * @param {Array} Y Array of objective values corresponding to the 
+    * points that were evaluated.
+    */
+    this.tell = function (X, Y) {
+
+        for(var i = 0; i < X.length; i++){
+            this.n_random_starts_ -= 1
+
+            if(this.best_y == null || Y[i] < this.best_y){
+                this.best_y = Y[i]
+                this.best_x = X[i]
+            }
+        }
+
+        if(this.n_random_starts_ < 0){
+            this.n_random_starts_ = 0
+        }
+
+        // record observations
+        this.X = this.X.concat(X)
+        this.Y = this.Y.concat(Y)
+
+    } // end of tell function
+
+} // end of optimizer class
+module.exports.RandomStepOptimizer = RandomStepOptimizer 
+
+/**
  * Minimize a function using a random algorithm.
  * While naive, such approach is often surprisingly competitive
  * for hyperparameter tuning purposes. Internally uses {@link RandomOptimizer}
  * class to perform optimization.
  * @param {function} fnc Function to be minimized.
- * @param {Array} dims An array of dimensions, that describe a search space for minimization,
+ * @param {Array} dimensions An array of dimensions, that describe a search space for minimization,
  * or an instance of {@link Space} object.
  * @param {Number} [n_calls=64] Function evaluation budget. The function will be evaluated for
  * at most this number of times.
  * @return {RandomOptimizer} The optimizer instance, that contains information about found minimum and explored arguments.
 */
- function dummy_minimize (func, dims, n_calls=64){
-    var opt = new module.exports.RandomOptimizer(dims);
+function dummy_minimize (func, dimensions, n_calls=64){
+    var opt = new module.exports.RandomOptimizer(dimensions);
 
     for(var iter=0; iter < n_calls; iter++){
         var x = opt.ask()
@@ -203,6 +371,35 @@ module.exports.RandomOptimizer = function(space){
     return opt
 }
 module.exports.dummy_minimize = dummy_minimize
+
+/**
+ * Minimize a function using a random algorithm.
+ * While naive, such approach is often surprisingly competitive
+ * for hyperparameter tuning purposes. Internally uses {@link RandomOptimizer}
+ * class to perform optimization.
+ * @param {function} fnc Function to be minimized.
+ * @param {Array} dimensions An array of dimensions, that describe a search space for minimization,
+ * or an instance of {@link Space} object.
+ * @param {Number} [n_calls=64] Function evaluation budget. The function will be evaluated for
+ * at most this number of times.
+ * @return {RandomOptimizer} The optimizer instance, that contains information about found minimum and explored arguments.
+*/
+function rs_minimize (func, dimensions, n_calls=64, n_random_starts=13, mutation_rate=0.1){
+    var opt = new module.exports.RandomStepOptimizer(
+        dimensions,
+        n_random_starts,
+        mutation_rate
+    );
+
+    for(var iter=0; iter < n_calls; iter++){
+        var x = opt.ask()
+        var y = func(x)
+        opt.tell([x], [y])
+    }
+
+    return opt
+}
+module.exports.rs_minimize = rs_minimize
 
 /**
  * Minimize an unconstrained function using zero order Powell algorithm.
