@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui">
+
+    <!-- Style -->
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+    <link rel="stylesheet" href="./normalize.css">
+    <link rel="stylesheet" href="./milligram.css">
+
+    <style>
+        .header .container {
+            border-top: 0;
+            padding-bottom: 2.5rem;
+            padding-top: 2.5rem;
+            position: relative;
+            text-align: center
+        }
+    </style>
+
+    <script src="./orbitdb.js"></script>
+    <script src="./ipfs.js"></script>
+    <script src="./triplesec-3.0.14-min.js"></script>
+    <script src="./crypto.js"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/ipfs/0.28.0/index.js"></script>-->
+
+    <title>P2P sharing</title>
+</head>
+<body>
+
+    <header class="header">
+        <section class="container">
+            <h2>Example peer to peer data sharing with IPFS and OrbitDB.</h2>
+            <h2 id = "p2pvis"></h2>
+        </section>
+    </header>
+
+    <section class="container">
+        <h4>What is this?</h4>
+        <p>
+            This is an example of decentralized data exchange.
+            Enter a name for the element to be stored in the
+            P2P database and contents in the form below, and
+            click "write". If you open this page in another
+            device or browser, you will see how the contents are
+            synchronized. To open an item, click on the name
+            in "Available entries" list.
+        </p>
+    </section>
+
+    <section class="container">
+        <div class="row">
+            <div class="column"><label>DB Name</label></div>
+            <div class="column"><input id="dbName" type="text" value="somep2pdb"></div>
+            <div class="column"><label>DB Password</label></div>
+            <div class="column"><input id="dbPassword" type="password" value=""></div>
+            <div class="column"><button class="button" onclick="start_db_config()" id="b0">Join p2p db</button></div>
+        </div>
+    </section>
+
+    <section class="container">
+        <div class="row">
+            <div class="column column-25">
+                <p>Crypto log:</p>
+            </div>
+            <div class="column">
+                <p id="crypt_out">""</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="container">
+        <div class="row">
+            <div class="column column-25">
+                <label>Available entries</label>
+                <ol id="databaseRecords">
+
+                </ol>
+            </div>
+            <div class="column">
+                <input type="text" id="entryName" placeholder="Entry name, eg. my.html">
+                <textarea id="entryValue" placeholder="Entry contents ..."></textarea>
+            </div>
+        </div>
+    </section>
+
+    <section class="container">
+        <div class="row">
+            <button onclick="write_entry()" disabled id="b1">Write</button>
+            <button onclick="del_entry()" disabled id="b2">Delete</button>
+            <button onclick="entry_to_file()" disabled  id="b3">Save</button>
+            <button class="button button-outline" onclick="run_html_entry()" disabled  id="b4">Render</button>
+        </div>
+    </section>
+
+    <section class="container">
+        <h4>Render entry as html body</h4>
+        <p>
+            If you click on the "run" button, then
+            the entry will be inserted into a sandboxed iframe
+            below with scripts and modals permissions, into a
+            body of an html page.
+        </p>
+    </section>
+
+    <header class="header">
+        <section class="container">
+            <h6>Loaded html:</h6>
+            <iframe id="codeContainer" sandbox="allow-scripts allow-modals"></iframe>
+        </section>
+    </header>
+
+
+    <script src="./p2panim.js"></script>
+    <script>
+        var vis = new P2PAnimation("p2pvis");
+        vis.run();
+        vis.offline();
+    </script>
+
+    <script>
+
+    // Function to download data to a file
+    function download(data, filename, type) {
+        var file = new Blob([data], {type: type});
+        if (window.navigator.msSaveOrOpenBlob) // IE10+
+            window.navigator.msSaveOrOpenBlob(file, filename);
+        else { // Others
+            var a = document.createElement("a"),
+                    url = URL.createObjectURL(file);
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            setTimeout(function() {
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(url);
+            }, 0);
+        }
+    }
+
+    var ipfs=null;
+    var db=null;
+    var crypt=null;
+
+    function update_ui(){
+        vis.dbloaded();
+
+        // query all elements
+        var query = db.query(()=>true)
+        var items_holder = document.getElementById('databaseRecords');
+        items_holder.innerHTML = '';
+
+        for(var i=0; i< query.length; i++){
+            var li = document.createElement('li')
+            var elem = query[i]
+            var id = elem['_id']
+
+            li.innerHTML = elem['_id']
+            li.onclick = function(idv){
+                return function(){
+                    load_entry(idv);
+                }
+            }(id)
+            items_holder.appendChild(li)
+        }
+    }
+
+    function run_html_entry(){
+        var value_html = document.getElementById('entryValue').value;
+        var div = document.getElementById('codeContainer');
+        var myvar = '<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">'+
+                '    <link rel="stylesheet" href="./normalize.css">'+
+                '    <link rel="stylesheet" href="./milligram.css">';
+
+
+
+        value_html = value_html;
+
+        value_html = "<html><body>" + myvar + value_html + "</body></html>"
+
+        div.srcdoc = value_html;
+    }
+
+    function entry_to_file(){
+        var entry_name = document.getElementById('entryName').value;
+        var entry_value = document.getElementById('entryValue').value;
+
+        download(entry_value, entry_name, "text/plain;charset=utf-8");
+    }
+
+    function write_entry(){
+        var name = document.getElementById('entryName').value
+        var entry = document.getElementById('entryValue').value
+
+        crypt.encrypt(entry, (enc_entry)=>{
+            db.put({_id: name, value: enc_entry})
+        })
+    }
+
+    function load_entry(id){
+        var query = db.query((doc)=>doc._id == id)
+
+        if(query.length == 0){
+            alarm('Record not found. Reload the page to update your database.')
+        }
+
+        var entry = query[0]
+        var name = entry['_id']
+        var value = entry['value']
+
+        crypt.decrypt(value, (dec_value)=>{
+            document.getElementById('entryName').value = name
+            document.getElementById('entryValue').value = dec_value
+        })
+    }
+
+    function del_entry(){
+        var name = document.getElementById('entryName').value
+        db.del(name)
+    }
+
+    function start_db_config(){
+        var crypt_log = function (obj) {
+            var out = document.getElementById('crypt_out');
+            out.innerHTML = JSON.stringify(obj);
+        }
+
+        var dbname = document.getElementById('dbName').value
+
+        // get pass
+        var pass = document.getElementById('dbPassword').value
+
+        if(pass == ""){
+            alert("Please enter non - empty password!")
+            return
+        }
+
+        crypt = new Crypt(pass, crypt_log);
+
+        document.getElementById('b0').disabled=true;
+        document.getElementById('b1').disabled=false;
+        document.getElementById('b2').disabled=false;
+        document.getElementById('b3').disabled=false;
+        document.getElementById('b4').disabled=false;
+
+        ipfs = new Ipfs({
+            repo: '/orbitdb/issuds/sharedappexample',
+            start: true,
+            EXPERIMENTAL: {
+              pubsub: true,
+            },
+            config: {
+              Addresses: {
+                Swarm: [
+                  // Use IPFS dev signal server
+                  // '/dns4/star-signal.cloud.ipfs.team/wss/p2p-webrtc-star',
+                  '/dns4/ws-star.discovery.libp2p.io/tcp/443/wss/p2p-websocket-star',
+                  // Use local signal server
+                  // '/ip4/0.0.0.0/tcp/9090/wss/p2p-webrtc-star',
+                ]
+              },
+            }
+        })
+
+        ipfs.on('ready', async () => {
+            // Create OrbitDB instance
+            const orbitdb = new OrbitDB(ipfs)
+
+            var dbConfig = {
+                // If database doesn't exist, create it
+                create: true,
+                overwrite: true,
+                sync: true,
+                // Load only the local version of the database,
+                // don't load the latest from the network yet
+                localOnly: false,
+                // If "Public" flag is set, allow anyone to write to the database,
+                // otherwise only the creator of the database can write
+                write: ['*'],
+            }
+
+            db = await orbitdb.docs(dbname, dbConfig)
+
+            db.events.on("replicated", ()=>{
+                console.log('database replicated')
+                update_ui()
+            })
+            db.events.on("write", ()=>{
+                console.log('database written to')
+                update_ui()
+            })
+            db.events.on("ready", ()=>{
+                console.log('database ready!')
+                update_ui()
+            })
+            db.events.on("load", ()=>{
+                console.log('database loaded!')
+                update_ui()
+            })
+
+            vis.online();
+
+        })
+    }
+
+
+    </script>
+
+</body>
+</html>
