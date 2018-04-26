@@ -390,7 +390,7 @@ module.exports.dummy_minimize = dummy_minimize
  * number of evaluations has been reported to the optimizer.
  * @param {Number} mutation_rate A value in the range of (0.0, 1.0]
  * @return {OMGOptimizer} The optimizer instance, that contains information about found minimum and explored arguments.
-*/
+*/ 
 function rs_minimize (func, dimensions, n_calls=64, n_random_starts=13, mutation_rate=0.1){
     var opt = new module.exports.OMGOptimizer(
         dimensions,
