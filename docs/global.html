@@ -104,114 +104,6 @@
     
 
     
-    <h4 class="name" id="ask"><span class="type-signature"></span>ask<span class="signature">()</span><span class="type-signature"> &rarr; {Array}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Generates the next point to evaluate. Different points will be generated for multiple calls, which can be used for parallelisation of optimization.
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="optimization.js.html">optimization.js</a>, <a href="optimization.js.html#line235">line 235</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    a point to evaluate.
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Array</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    
     <h4 class="name" id="dummy_minimize"><span class="type-signature"></span>dummy_minimize<span class="signature">(fnc, dimensions, n_calls<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {<a href="RandomOptimizer.html">RandomOptimizer</a>}</span></h4>
     
 
@@ -408,7 +300,7 @@ at most this number of times.</td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="optimization.js.html">optimization.js</a>, <a href="optimization.js.html#line362">line 362</a>
+        <a href="optimization.js.html">optimization.js</a>, <a href="optimization.js.html#line363">line 363</a>
     </li></ul></dd>
     
 
@@ -614,7 +506,7 @@ which is to be minimized.</td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="optimization.js.html">optimization.js</a>, <a href="optimization.js.html#line482">line 482</a>
+        <a href="optimization.js.html">optimization.js</a>, <a href="optimization.js.html#line483">line 483</a>
     </li></ul></dd>
     
 
@@ -822,7 +714,7 @@ which is to be minimized.</td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="optimization.js.html">optimization.js</a>, <a href="optimization.js.html#line548">line 548</a>
+        <a href="optimization.js.html">optimization.js</a>, <a href="optimization.js.html#line549">line 549</a>
     </li></ul></dd>
     
 
@@ -1007,7 +899,7 @@ which is to be minimized.</td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="optimization.js.html">optimization.js</a>, <a href="optimization.js.html#line415">line 415</a>
+        <a href="optimization.js.html">optimization.js</a>, <a href="optimization.js.html#line416">line 416</a>
     </li></ul></dd>
     
 
@@ -1054,356 +946,6 @@ value of the function at the best found argument.
 </dl>
 
     
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="RandomStepOptimizer"><span class="type-signature"></span>RandomStepOptimizer<span class="signature">(dimensions, n_random_starts, mutation_rate)</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    A class that performs optimization via random permutations to the best
-found point thus far. Such approach in particular yields pretty promising
-results on the SigOpt's "evalset" set of problems for example.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-        <th>Default</th>
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>dimensions</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Array</span>
-
-
-            
-            </td>
-
-            
-
-            
-                <td class="default">
-                
-                </td>
-            
-
-            <td class="description last">A list of dimensions or a <a href="Space.html">Space</a> object. 
-Describes the space of values over which a function will be optimized.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>n_random_starts</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><a href="Integer.html">Integer</a></span>
-
-
-            
-            </td>
-
-            
-
-            
-                <td class="default">
-                
-                    13
-                
-                </td>
-            
-
-            <td class="description last">Determines how many points wil be generated
-initially at random. The points are not generated at random after this
-number of evaluations has been reported to the optimizer.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>mutation_rate</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Number</span>
-
-
-            
-            </td>
-
-            
-
-            
-                <td class="default">
-                
-                    0.1
-                
-                </td>
-            
-
-            <td class="description last">A value in the range of (0.0, 1.0]</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-    <h5 class="subsection-title">Properties:</h5>
-
-    
-
-<table class="props">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>X</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Array</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">An array of arguments tried.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>Y</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Array</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">An array of function values observed. The 
-order corresponds to the order in arguments array.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>best_x</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Array</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">An argument that results in minimal objective
-function value.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>best_y</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Minimal objective value observed.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>space</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><a href="Space.html">Space</a></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Optimization space over which the optimization is done.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="optimization.js.html">optimization.js</a>, <a href="optimization.js.html#line200">line 200</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1611,7 +1153,7 @@ at most this number of times.</td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="optimization.js.html">optimization.js</a>, <a href="optimization.js.html#line387">line 387</a>
+        <a href="optimization.js.html">optimization.js</a>, <a href="optimization.js.html#line388">line 388</a>
     </li></ul></dd>
     
 
@@ -1656,165 +1198,6 @@ at most this number of times.</td>
 </dl>
 
     
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="tell"><span class="type-signature"></span>tell<span class="signature">(X, Y)</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Function for reporting of the observed function values
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>X</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Array</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Array of observed points.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>Y</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Array</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Array of objective values corresponding to the 
-points that were evaluated.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="optimization.js.html">optimization.js</a>, <a href="optimization.js.html#line326">line 326</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1996,13 +1379,13 @@ objects.
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Categorical.html">Categorical</a></li><li><a href="Integer.html">Integer</a></li><li><a href="RandomOptimizer.html">RandomOptimizer</a></li><li><a href="Real.html">Real</a></li><li><a href="Space.html">Space</a></li></ul><h3>Global</h3><ul><li><a href="global.html#ask">ask</a></li><li><a href="global.html#dummy_minimize">dummy_minimize</a></li><li><a href="global.html#minimize_GradientDescent">minimize_GradientDescent</a></li><li><a href="global.html#minimize_L_BFGS">minimize_L_BFGS</a></li><li><a href="global.html#minimize_Powell">minimize_Powell</a></li><li><a href="global.html#RandomStepOptimizer">RandomStepOptimizer</a></li><li><a href="global.html#rs_minimize">rs_minimize</a></li><li><a href="global.html#tell">tell</a></li><li><a href="global.html#to_space">to_space</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Categorical.html">Categorical</a></li><li><a href="Integer.html">Integer</a></li><li><a href="RandomOptimizer.html">RandomOptimizer</a></li><li><a href="RandomStepOptimizer.html">RandomStepOptimizer</a></li><li><a href="Real.html">Real</a></li><li><a href="Space.html">Space</a></li></ul><h3>Global</h3><ul><li><a href="global.html#dummy_minimize">dummy_minimize</a></li><li><a href="global.html#minimize_GradientDescent">minimize_GradientDescent</a></li><li><a href="global.html#minimize_L_BFGS">minimize_L_BFGS</a></li><li><a href="global.html#minimize_Powell">minimize_Powell</a></li><li><a href="global.html#rs_minimize">rs_minimize</a></li><li><a href="global.html#to_space">to_space</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu Apr 26 2018 02:16:02 GMT+0200 (CEST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu Apr 26 2018 02:27:09 GMT+0200 (CEST)
 </footer>
 
 <script> prettyPrint(); </script>

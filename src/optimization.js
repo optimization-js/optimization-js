@@ -183,6 +183,7 @@ module.exports.RandomOptimizer = function(space){
  * A class that performs optimization via random permutations to the best
  * found point thus far. Such approach in particular yields pretty promising
  * results on the SigOpt's "evalset" set of problems for example.
+ * @constructor
  * @param {Array} dimensions A list of dimensions or a {@link Space} object. 
  * Describes the space of values over which a function will be optimized.
  * @param {Integer} n_random_starts Determines how many points wil be generated
@@ -208,7 +209,7 @@ function RandomStepOptimizer(dimensions, n_random_starts = 13, mutation_rate = 0
     this.best_x = null
     this.best_y = null
 
-    /*
+    /**
     * Generates a boolean value at random. Is used for random mutations. 
     * @param {Number} p Probability of generation of true value 
     * @returns {Boolean} a randomly generated boolean value. 

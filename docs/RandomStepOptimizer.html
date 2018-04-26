@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: RandomOptimizer</title>
+    <title>JSDoc: Class: RandomStepOptimizer</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: RandomOptimizer</h1>
+    <h1 class="page-title">Class: RandomStepOptimizer</h1>
 
     
 
@@ -28,7 +28,7 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>RandomOptimizer<span class="signature">(space)</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>RandomStepOptimizer<span class="signature">(dimensions, n_random_starts, mutation_rate)</span><span class="type-signature"></span></h2>
         
     
 </header>
@@ -41,7 +41,7 @@
     
 
     
-    <h4 class="name" id="RandomOptimizer"><span class="type-signature"></span>new RandomOptimizer<span class="signature">(space)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="RandomStepOptimizer"><span class="type-signature"></span>new RandomStepOptimizer<span class="signature">(dimensions, n_random_starts, mutation_rate)</span><span class="type-signature"></span></h4>
     
 
     
@@ -49,8 +49,9 @@
 
 
 <div class="description">
-    A random optimization function. Sometimes competitive in practice
-for hyperparameter tuning for instance.
+    A class that performs optimization via random permutations to the best
+found point thus far. Such approach in particular yields pretty promising
+results on the SigOpt's "evalset" set of problems for example.
 </div>
 
 
@@ -76,6 +77,8 @@ for hyperparameter tuning for instance.
         
 
         
+        <th>Default</th>
+        
 
         <th class="last">Description</th>
     </tr>
@@ -86,13 +89,13 @@ for hyperparameter tuning for instance.
 
         <tr>
             
-                <td class="name"><code>space</code></td>
+                <td class="name"><code>dimensions</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Object</span>
+<span class="param-type">Array</span>
 
 
             
@@ -101,9 +104,73 @@ for hyperparameter tuning for instance.
             
 
             
+                <td class="default">
+                
+                </td>
+            
 
-            <td class="description last">An array of dimension descriptors that are 
-used to specify search space or an instance of <a href="Space.html">Space</a>.</td>
+            <td class="description last">A list of dimensions or a <a href="Space.html">Space</a> object. 
+Describes the space of values over which a function will be optimized.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>n_random_starts</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Integer.html">Integer</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                    13
+                
+                </td>
+            
+
+            <td class="description last">Determines how many points wil be generated
+initially at random. The points are not generated at random after this
+number of evaluations has been reported to the optimizer.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>mutation_rate</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                    0.1
+                
+                </td>
+            
+
+            <td class="description last">A value in the range of (0.0, 1.0]</td>
         </tr>
 
     
@@ -290,7 +357,7 @@ function value.</td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="optimization.js.html">optimization.js</a>, <a href="optimization.js.html#line135">line 135</a>
+        <a href="optimization.js.html">optimization.js</a>, <a href="optimization.js.html#line201">line 201</a>
     </li></ul></dd>
     
 
@@ -344,7 +411,7 @@ function value.</td>
     
 
     
-    <h4 class="name" id="ask"><span class="type-signature"></span>ask<span class="signature">(n)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="ask"><span class="type-signature"></span>ask<span class="signature">()</span><span class="type-signature"> &rarr; {Array}</span></h4>
     
 
     
@@ -352,7 +419,115 @@ function value.</td>
 
 
 <div class="description">
-    Get the next point or array of points to evaluate.
+    Generates the next point to evaluate. Different points will be generated for multiple calls, which can be used for parallelisation of optimization.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="optimization.js.html">optimization.js</a>, <a href="optimization.js.html#line236">line 236</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    a point to evaluate.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="rnd"><span class="type-signature"></span>rnd<span class="signature">(p)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Generates a boolean value at random. Is used for random mutations.
 </div>
 
 
@@ -388,7 +563,7 @@ function value.</td>
 
         <tr>
             
-                <td class="name"><code>n</code></td>
+                <td class="name"><code>p</code></td>
             
 
             <td class="type">
@@ -404,10 +579,7 @@ function value.</td>
 
             
 
-            <td class="description last">Specifies how many points should be provided by
-the optimizer algorithm to try in parallel. If specified, an array
-of points to evaluate is returned. If not, only a single point is 
-returned verbatium.</td>
+            <td class="description last">Probability of generation of true value</td>
         </tr>
 
     
@@ -448,7 +620,7 @@ returned verbatium.</td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="optimization.js.html">optimization.js</a>, <a href="optimization.js.html#line149">line 149</a>
+        <a href="optimization.js.html">optimization.js</a>, <a href="optimization.js.html#line217">line 217</a>
     </li></ul></dd>
     
 
@@ -471,6 +643,28 @@ returned verbatium.</td>
 
 
 
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    a randomly generated boolean value.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Boolean</span>
+
+
+    </dd>
+</dl>
+
+    
 
 
 
@@ -490,9 +684,7 @@ returned verbatium.</td>
 
 
 <div class="description">
-    Report back to the optimizer the points that were tried. Do not 
-really need to do it for random sampling, but this is here for 
-consistency with future more "intelligent" algorithms.
+    Function for reporting of the observed function values
 </div>
 
 
@@ -609,7 +801,7 @@ points that were evaluated.</td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="optimization.js.html">optimization.js</a>, <a href="optimization.js.html#line166">line 166</a>
+        <a href="optimization.js.html">optimization.js</a>, <a href="optimization.js.html#line327">line 327</a>
     </li></ul></dd>
     
 
