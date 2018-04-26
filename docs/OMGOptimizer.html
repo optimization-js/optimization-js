@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: RandomStepOptimizer</title>
+    <title>JSDoc: Class: OMGOptimizer</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: RandomStepOptimizer</h1>
+    <h1 class="page-title">Class: OMGOptimizer</h1>
 
     
 
@@ -28,7 +28,7 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>RandomStepOptimizer<span class="signature">(dimensions, n_random_starts, mutation_rate)</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>OMGOptimizer<span class="signature">(dimensions, n_random_starts, mutation_rate)</span><span class="type-signature"></span></h2>
         
     
 </header>
@@ -41,7 +41,7 @@
     
 
     
-    <h4 class="name" id="RandomStepOptimizer"><span class="type-signature"></span>new RandomStepOptimizer<span class="signature">(dimensions, n_random_starts, mutation_rate)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="OMGOptimizer"><span class="type-signature"></span>new OMGOptimizer<span class="signature">(dimensions, n_random_starts, mutation_rate)</span><span class="type-signature"></span></h4>
     
 
     
@@ -49,9 +49,10 @@
 
 
 <div class="description">
-    A class that performs optimization via random permutations to the best
-found point thus far. Such approach in particular yields pretty promising
-results on the SigOpt's "evalset" set of problems for example.
+    Only Mutation Genetic Optimizer;
+A class that performs optimization via random permutations to the best
+found point thus far. Such approach in particular yields better results
+than with crossover on the SigOpt's "evalset" set of problems.
 </div>
 
 
@@ -357,7 +358,7 @@ function value.</td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="optimization.js.html">optimization.js</a>, <a href="optimization.js.html#line201">line 201</a>
+        <a href="optimization.js.html">optimization.js</a>, <a href="optimization.js.html#line202">line 202</a>
     </li></ul></dd>
     
 
@@ -463,7 +464,7 @@ function value.</td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="optimization.js.html">optimization.js</a>, <a href="optimization.js.html#line236">line 236</a>
+        <a href="optimization.js.html">optimization.js</a>, <a href="optimization.js.html#line237">line 237</a>
     </li></ul></dd>
     
 
@@ -620,7 +621,7 @@ function value.</td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="optimization.js.html">optimization.js</a>, <a href="optimization.js.html#line217">line 217</a>
+        <a href="optimization.js.html">optimization.js</a>, <a href="optimization.js.html#line218">line 218</a>
     </li></ul></dd>
     
 
@@ -801,7 +802,7 @@ points that were evaluated.</td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="optimization.js.html">optimization.js</a>, <a href="optimization.js.html#line327">line 327</a>
+        <a href="optimization.js.html">optimization.js</a>, <a href="optimization.js.html#line328">line 328</a>
     </li></ul></dd>
     
 
@@ -845,13 +846,13 @@ points that were evaluated.</td>
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Categorical.html">Categorical</a></li><li><a href="Integer.html">Integer</a></li><li><a href="RandomOptimizer.html">RandomOptimizer</a></li><li><a href="RandomStepOptimizer.html">RandomStepOptimizer</a></li><li><a href="Real.html">Real</a></li><li><a href="Space.html">Space</a></li></ul><h3>Global</h3><ul><li><a href="global.html#dummy_minimize">dummy_minimize</a></li><li><a href="global.html#minimize_GradientDescent">minimize_GradientDescent</a></li><li><a href="global.html#minimize_L_BFGS">minimize_L_BFGS</a></li><li><a href="global.html#minimize_Powell">minimize_Powell</a></li><li><a href="global.html#rs_minimize">rs_minimize</a></li><li><a href="global.html#to_space">to_space</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Categorical.html">Categorical</a></li><li><a href="Integer.html">Integer</a></li><li><a href="OMGOptimizer.html">OMGOptimizer</a></li><li><a href="RandomOptimizer.html">RandomOptimizer</a></li><li><a href="Real.html">Real</a></li><li><a href="Space.html">Space</a></li></ul><h3>Global</h3><ul><li><a href="global.html#dummy_minimize">dummy_minimize</a></li><li><a href="global.html#minimize_GradientDescent">minimize_GradientDescent</a></li><li><a href="global.html#minimize_L_BFGS">minimize_L_BFGS</a></li><li><a href="global.html#minimize_Powell">minimize_Powell</a></li><li><a href="global.html#rs_minimize">rs_minimize</a></li><li><a href="global.html#to_space">to_space</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu Apr 26 2018 02:27:09 GMT+0200 (CEST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu Apr 26 2018 08:45:48 GMT+0200 (CEST)
 </footer>
 
 <script> prettyPrint(); </script>

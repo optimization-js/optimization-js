@@ -181,9 +181,10 @@ module.exports.RandomOptimizer = function(space){
 }
 
 /**
+ * Only Mutation Genetic Optimizer;
  * A class that performs optimization via random permutations to the best
- * found point thus far. Such approach in particular yields pretty promising
- * results on the SigOpt's "evalset" set of problems for example.
+ * found point thus far. Such approach in particular yields better results
+ * than with crossover on the SigOpt's "evalset" set of problems.
  * @constructor
  * @param {Array} dimensions A list of dimensions or a {@link Space} object. 
  * Describes the space of values over which a function will be optimized.
@@ -199,7 +200,7 @@ module.exports.RandomOptimizer = function(space){
  * @property {Number} best_y Minimal objective value observed.
  * @property {Space} space Optimization space over which the optimization is done.
  */
-function RandomStepOptimizer(dimensions, n_random_starts = 13, mutation_rate = 0.1) {
+function OMGOptimizer(dimensions, n_random_starts = 13, mutation_rate = 0.1) {
 
     this.space = module.exports.to_space(dimensions);
     this.n_random_starts = n_random_starts;
@@ -347,7 +348,7 @@ function RandomStepOptimizer(dimensions, n_random_starts = 13, mutation_rate = 0
     } // end of tell function
 
 } // end of optimizer class
-module.exports.RandomStepOptimizer = RandomStepOptimizer 
+module.exports.OMGOptimizer = OMGOptimizer 
 
 /**
  * Minimize a function using a random algorithm.
@@ -384,10 +385,14 @@ module.exports.dummy_minimize = dummy_minimize
  * or an instance of {@link Space} object.
  * @param {Number} [n_calls=64] Function evaluation budget. The function will be evaluated for
  * at most this number of times.
- * @return {RandomOptimizer} The optimizer instance, that contains information about found minimum and explored arguments.
+ * @param {Integer} n_random_starts Determines how many points wil be generated
+ * initially at random. The points are not generated at random after this
+ * number of evaluations has been reported to the optimizer.
+ * @param {Number} mutation_rate A value in the range of (0.0, 1.0]
+ * @return {OMGOptimizer} The optimizer instance, that contains information about found minimum and explored arguments.
 */
 function rs_minimize (func, dimensions, n_calls=64, n_random_starts=13, mutation_rate=0.1){
-    var opt = new module.exports.RandomStepOptimizer(
+    var opt = new module.exports.OMGOptimizer(
         dimensions,
         n_random_starts,
         mutation_rate
