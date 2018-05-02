@@ -47,5 +47,13 @@ pip3 install -e .
 ```
 
 In the latter version you can easier edit the code.
+Here is example bash code to install everything:
+```bash
+git clone https://github.com/iaroslav-ai/scikit-optimize-benchmarks.git
+cd scikit-optimize-benchmarks
+pip3 install -e .
+cd ..
+pip3 install https://github.com/sigopt/evalset/archive/master.zip
+```
 
 * You should be good to go!

@@ -14,7 +14,7 @@
             "name": "Launch Chrome debug on localhost:10783",
             "type": "chrome",
             "request": "launch",
-            "url": "http://localhost:10783/examples/example_quadratic.html",
+            "url": "http://localhost:10783/demos/sequential_nn_tuning.html",
             "webRoot": "${workspaceFolder}/",
         }
     ]

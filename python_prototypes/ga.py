@@ -235,12 +235,12 @@ class RandomStepOptimizer():
                     # of binary values. however, here mutation is done
                     # explicity with numbers.
                     a, b = dim.low, dim.high
-                    for i in range(16):
+                    for i in range(-16, 1):
                         if self.rnd():
                             # record that there has been a change to the point
                             finished = True                     
                             # amount of change, proportional to the size of the dimension
-                            scale = 2.0 ** (-1.0 * i)
+                            scale = 2.0 ** i
 
                             # determine the direction of change - towards a or b
                             if self.rnd(0.5):
