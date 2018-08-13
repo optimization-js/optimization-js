@@ -21,7 +21,9 @@ See also `compare.py`.
 
 ## Benchmarking results with other existing methods
 
-Currently, the library supports two variants of genetic optimization algorithm. 
+Currently, [optimization-js](https://github.com/optimization-js/optimization-js/) 
+supports two variants of genetic optimization algorithm, that can be used for
+black box optimization with variables of mixed type. 
 A range of algorithms from python ecosystem were used for comparison, as well as 
 the set of testing objective functions from `evalset` package, maintained by SigOpt.
 For evaluation procedure details, please see [here](https://github.com/iaroslav-ai/scikit-optimize-benchmarks#how-performance-is-calculated).

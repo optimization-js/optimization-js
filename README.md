@@ -56,8 +56,13 @@ Documentation is hosted on github pages here: [http://optimization-js.github.io/
 
 ## Available algorithms:
 
-* **Variation of Powell zero order minimization method.** Very useful method for prototyping. Only requires that a function can be computed (derivative need not be provided!), and typically works fine for problems with 100 - 1000 variables (vector argument size). 
+Gradient free:
+* **Genetic optimization algorithms** Useful when your function takes as input arguments of 
+mixed type, such as categorical and numerical values.  
+* **Variation of Powell zero order minimization method.** Very useful method for prototyping. Typically works decently for problems with 100 - 1000 variables (vector argument size).
+
+Requires gradient:
 * **Limited memory Broyden–Fletcher–Goldfarb–Shanno method (L-BFGS).** Very popular and powerful minimization algorithm. Uses approximation to the Hessian based on recorded gradients over the last m function evaluations. Involves numerical division, and because of this can be unstable, so use at your own risk.
 * **Vanilla gradient descent.** Performs gradient descent using user provided function and its gradient. Can be used instead of L-BFGS in case the latter is unstable on your problem.
-* **Stochastic gradient descent.** Efficient for finding local minimum of optimization problems involving objective function of the form f(w) = ∑ <sub>i ∈ [n]</sub> g<sub>i</sub>(w). For such objectives, gradient is estimated with a subset of the sum, where such subset is seleted randomly at every iteration. Such method is widely used for predictive modelling with large datasets.
 
+See JavaScript files in `examples` folder for examples on how to use the algorithms.
