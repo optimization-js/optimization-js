@@ -19,10 +19,48 @@ get_average_ranking('comparison.csv')
 
 See also `compare.py`.
 
+## Benchmarking results with other existing methods
 
-## how to set up everything necessary for this code to work
+Currently, the library supports two variants of genetic optimization algorithm. 
+A range of algorithms from python ecosystem were used for comparison, as well as 
+the set of testing objective functions from `evalset` package, maintained by SigOpt.
+For evaluation procedure details, please see [here](https://github.com/iaroslav-ai/scikit-optimize-benchmarks#how-performance-is-calculated).
+The performance of an algorithm is measured by its average rank on all optimization problems;
+That is, performance of 3.0 means that relative to other algorithms, the algorithm
+is typically outperformed by some other 2 algorithms. The average rank can be fractional,
+as different algorithms can perform different on different problems.
 
-* You need Python3.5 installed on your system (A version which is tested to work)
+The results are given below. Results in bold are for the algorithms in this library.
+
+| Algorithm | Rank |
+| --------- |------| 
+| [gpyopt_minimize](https://github.com/SheffieldML/GPyOpt) | 1.47 |
+| [gp_minimize](https://github.com/scikit-optimize/scikit-optimize)| 2.31 |
+| [forest_minimize](https://github.com/scikit-optimize/scikit-optimize)| 2.31 |
+| [**rs_minimise**](https://github.com/optimization-js/optimization-js/blob/64c7ff7c39471dde9cce09e8bf9735770829d305/python_prototypes/ga.py#L161)| **2.41**|
+| [gbrt_minimize](https://github.com/scikit-optimize/scikit-optimize)| 3.57 |
+| [**ga_minimize**](https://github.com/optimization-js/optimization-js/blob/64c7ff7c39471dde9cce09e8bf9735770829d305/python_prototypes/ga.py#L12)| **3.78**|
+| [smac_minimize](https://github.com/automl/SMAC3)| 4.26 |
+| [hyperopt_minimize](https://github.com/hyperopt/hyperopt)| 4.42 |
+| random exploration | 6.42 |
+
+**Note**: An interesting observation is that model - free methods such as 
+`rs_minimize` could actually be
+quite competitive. This is especially useful in cases where evaluation of 
+objective is much cheaper than estimation of next point using e.g. Gaussian Process.
+Determining next point in `rs_minimize` takes microseconds at most, and hence can be
+used in such situation to explore much more points per unit of time, which typically
+leads to comparable or even better objective than with BO.
+
+Another scenario where this could be useful is when many evaluations of objective
+are necessary to reach optimum solution, as methods like `rs_minimize` scale easily,
+and are straightforward to parallelize. 
+
+To reproduce, see `evaluate.py` and `compare.py`.
+
+## How to set up everything necessary for this code to work
+
+* You need Python3.5 installed on your system (this is a version that this code is tested with)
 
 * If you use Visual Code to run python, configure the use of correct python (3.5) if you by default the proper version does not run. To check this, ensure that the following script raises an error:
 
