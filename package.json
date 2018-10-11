@@ -51,20 +51,20 @@
   "devDependencies": {
     "chai": "4.1.2",
     "codecov.io": "0.1.6",
-    "commitizen": "^2.9.6",
+    "commitizen": "^2.10.1",
     "cz-conventional-changelog": "^2.1.0",
     "ghooks": "2.0.2",
     "istanbul": "0.4.5",
     "mocha": "5.0.5",
     "rimraf": "2.6.2",
-    "semantic-release": "^15.1.6",
+    "semantic-release": "^15.10.2",
     "travis-deploy-once": "^4.4.1"
   },
   "dependencies": {
     "browserify": "16.2.0",
     "inchjs": "0.4.1",
     "jsdoc": "3.5.5",
-    "semantic-release-cli": "^3.6.6",
+    "semantic-release-cli": "^3.6.7",
     "travis": "0.1.1"
   }
 }
