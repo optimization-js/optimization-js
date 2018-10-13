@@ -11,8 +11,8 @@ var objective = function(x){
 
 // create example space 
 var dims = [
-    new optimjs.Real(-2.0, 2.0),
-    new optimjs.Real(-2.0, 2.0),
+    optimjs.Real(-2.0, 2.0),
+    optimjs.Real(-2.0, 2.0),
 ]
 
 function example_bb_optimization(){
@@ -37,7 +37,7 @@ function example_bb_optimization(){
     var rs_result = optimjs.rs_minimize(objective, dims, n_calls=256)
 
     // Create optimizer instance. A necessary input is the definition of space.
-    var optimizer = new optimjs.RandomOptimizer(dims)
+    var optimizer = optimjs.RandomOptimizer(dims)
 
     // optimization loop specified manually. The optimization runs for 256 iterations.
     for(var iter=0; iter<256; iter++){
@@ -83,9 +83,9 @@ function example_bb_mixed_minimization(){
 
     // create example space 
     var dims = [
-        new optimjs.Real(-5.0, -1.0),
-        new optimjs.Integer(2, 256),
-        new optimjs.Categorical(['relu', 'tanh', 'sin']),
+        optimjs.Real(-5.0, -1.0),
+        optimjs.Integer(2, 256),
+        optimjs.Categorical(['relu', 'tanh', 'sin']),
     ]
 
     // get the solution

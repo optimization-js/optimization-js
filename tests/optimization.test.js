@@ -79,8 +79,8 @@ describe('Ask and tell optimizers', function(){
         expect(x[2]).to.be.equal('relu')
     })
     it('allows to sample n points at a time', function(){
-        var optimizer = new optimjs.RandomOptimizer([
-            new optimjs.Real(-1.0, 1.0)
+        var optimizer = optimjs.RandomOptimizer([
+            optimjs.Real(-1.0, 1.0)
         ])
 
         var X = optimizer.ask(2)
@@ -109,7 +109,7 @@ describe('Space', function(){
     })
     it('should work with integer dimensions', function(){
         // test creation of the Integer dimension
-        var dim = new optimjs.Integer(0, 3)
+        var dim = optimjs.Integer(0, 3)
         
         // test the values returned by the integer value
         var r = {}
@@ -125,7 +125,7 @@ describe('Space', function(){
     })
     it('should work with categorical dimensions', function(){
         // test creation of the Integer dimension
-        var dim = new optimjs.Categorical(['a', 1, 2.0, 'zazz', true])
+        var dim = optimjs.Categorical(['a', 1, 2.0, 'zazz', true])
         
         // test the values returned by the integer value
         var r = {}
