@@ -64,7 +64,7 @@
     "browserify": "16.2.0",
     "inchjs": "0.4.1",
     "jsdoc": "^3.6.3",
-    "semantic-release-cli": "^3.6.7",
+    "semantic-release-cli": "^5.2.1",
     "travis": "0.1.1"
   }
 }
