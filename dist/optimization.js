@@ -432,12 +432,12 @@ module.exports.rs_minimize = rs_minimize
  * which is to be minimized.
  * @param {Array} x0 An array of values of size N, which is an initialization
  *  to the minimization algorithm.
+ * @param {number} eps
  * @return {Object} An object instance with two fields: argument, which 
  * denotes the best argument found thus far, and fncvalue, which is a
  * value of the function at the best found argument.
 */
-module.exports.minimize_Powell = function (fnc, x0) {
-    var eps = 1e-2;
+module.exports.minimize_Powell = function (fnc, x0, eps = 1e-2) {
 
     var convergence = false;
     var x = x0.slice(); // make copy of initialization
